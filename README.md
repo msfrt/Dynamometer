@@ -2,4 +2,4 @@
 
 *Dyno make car go fast.*
 
-![vroom, vroom!](https://i.pinimg.com/originals/c6/02/f3/c602f3754f4aa50bb3efb4bd6c55f0ba.gif)
+![vroom, vroom!](https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/boom-1512154509.gif?crop=1.00xw:1.00xh;0,0&resize=980:*)
