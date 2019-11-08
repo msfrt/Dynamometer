@@ -330,13 +330,14 @@ void loop() {
     // determine what PWM frequency is appropriate before writing
     SET_PWM_FREQUENCY();
 
-    // this if statement is for the WP override button
-    if (!PUMP_on){
+    // this if statement is for the WP override button. (analogread <= 100 for a small buffer);
+    // REPLACE WITH ACTUAL PIN
+    if (analogRead(A8) <= 100){
       // this if statement only writes to the pin if the PWM changes from it's previous value (held by livePWM2)
       if (WP_livePWM != WP_livePWM2) {WP_livePWM2 = WP_livePWM; analogWrite(A8, WP_livePWM);}
     } else {
-      // keep dat fan on
-      analogWrite(A8, WP_livePWM);
+      // keep dat pump on
+      analogWrite(A8, 255);
     }
   }
 
@@ -662,7 +663,7 @@ static void ANA_TO_SENSORVAL( int sensGroup )
       WP.currentMax = WP.currentMax       * (33000 / 1023);
       WP.currentAvg /= WP.currentSensCount;
       WP.currentSensCount = 0;
-      WP.currentAvg = WP.currentAvg       * (33000 / 1023)
+      WP.currentAvg = WP.currentAvg       * (33000 / 1023);
 
 
       //------------------------------------------------------------------------
@@ -957,11 +958,11 @@ static void CALC_SEND_CAN()
 
     //PDM_13
     msg.buf[0] = 0;// brakelight state and counter - set up later;
-    msg.buf[1] = FANR_livePWM;
-    msg.buf[2] = FANL_livePWM;
+    msg.buf[1] = 0;
+    msg.buf[2] = 0;
     msg.buf[3] = WP_livePWM;
-    msg.buf[4] = BOARD_temp; // board temp
-    msg.buf[5] = BOARD_temp >> 8; // board temp
+    msg.buf[4] = 0;
+    msg.buf[5] = 0;
     msg.buf[6] = 0;
     msg.buf[7] = 0; //
     CAN_DATA_SEND(0xA3, 8, 1); // 100Hz
@@ -1056,8 +1057,6 @@ void CAN_READ()
             CAN0_rpm.value = rxData[4] * 256 + rxData[5];
 
             CAN0_rpm.lastRecieve = millis();
-
-            check_canSensor_bounds(CAN0_rpm);
             break;
 
           // MultID 0x4
@@ -1065,8 +1064,6 @@ void CAN_READ()
             CAN0_engTemp.value = rxData[4] * 256 + rxData[5];
 
             CAN0_engTemp.lastRecieve = millis();
-
-            check_canSensor_bounds(CAN0_engTemp);
             break;
         }
       }
@@ -1085,7 +1082,7 @@ void WP_findTemp(int table[WP_numTempEntries][WP_numRPMEntries])
 // are greater than and less than are returned.
 // ---------------------------------------------------------------------------------------
 {
-  for (int i = 1; i < FAN_numTempEntries; i++)
+  for (int i = 1; i < WP_numTempEntries; i++)
   {
 
     if (table[i][0] == CAN0_engTemp.value)
