@@ -1016,27 +1016,38 @@ void CAN_READ()
       // MOTEC M400 MESSAGES *KEEP AT TOP*
       // M400_dataSet2
       // ID 0x5F0
-      case 0x5EF:
+      case 1520:
       {
 
         // read the multiplexor
         switch(rxMultID)
         {
 
-          // MultID 0x0
-          case 0x0:
-            CAN0_rpm.value = rxData[4] * 256 + rxData[5];
+          // MultID 9
+          case 9:
+            CAN0_rpm.value = rxData[6] * 256 + rxData[7];
 
             CAN0_rpm.lastRecieve = millis();
             break;
+        }
+        break;
+      }
 
-          // MultID 0x4
-          case 0x4:
-            CAN0_engTemp.value = rxData[4] * 256 + rxData[5];
+      case 1519:
+      {
+
+        // read the multiplexor
+        switch(rxMultID)
+        {
+
+          // MultID 3
+          case 3:
+            CAN0_engTemp.value = rxData[6] * 256 + rxData[7];
 
             CAN0_engTemp.lastRecieve = millis();
             break;
         }
+        break;
       }
     }
   }
