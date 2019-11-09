@@ -331,8 +331,8 @@ void loop() {
     SET_PWM_FREQUENCY();
 
     // this if statement is for the WP override button. (analogread <= 100 for a small buffer);
-    // REPLACE WITH ACTUAL PIN
-    if (analogRead(A8) <= 100){
+    // REPLACE WITH analogRead(A8) <= 100, WHERE A8 IS THE PIN OF YOUR CHOICE, AND THE INT IS THE THRESHOLD VALUE
+    if (true){
       // this if statement only writes to the pin if the PWM changes from it's previous value (held by livePWM2)
       if (WP_livePWM != WP_livePWM2) {WP_livePWM2 = WP_livePWM; analogWrite(A8, WP_livePWM);}
     } else {
@@ -776,35 +776,6 @@ static void CALC_SEND_CAN()
 //   Serial.print("Water Pump voltage = "); Serial.println(WP.voltAvg);
 //   Serial.println(analogRead(A21));
 
-    //PDM_01
-    msg.buf[0] = messageCount100Hz; //add counter
-    msg.buf[1] = FANR.currentMax; //
-    msg.buf[2] = FANR.currentMax >> 8;
-    msg.buf[3] = FANR.currentAvg; //
-    msg.buf[4] = FANR.currentAvg >> 8;
-    msg.buf[5] = FANR.currentMin; //
-    msg.buf[6] = FANR.currentMin >> 8;
-    msg.buf[7] = 0;
-    CAN_DATA_SEND(0x97, 8, 1); // 100Hz
-
-    FANR.currentMax = -2147483647;
-    FANR.currentAvg = 0;
-    FANR.currentMin = 2147483647;
-
-    //PDM_02
-    msg.buf[0] = messageCount100Hz; // add counter
-    msg.buf[1] = FANL.currentMax; //
-    msg.buf[2] = FANL.currentMax >> 8;
-    msg.buf[3] = FANL.currentAvg;
-    msg.buf[4] = FANL.currentAvg >> 8;
-    msg.buf[5] = FANL.currentMin;
-    msg.buf[6] = FANL.currentMin >> 8;
-    msg.buf[7] = 0; //
-    CAN_DATA_SEND(0x98, 8, 1); // 100Hz
-
-    FANL.currentMax = -2147483647;
-    FANL.currentAvg = 0;
-    FANL.currentMin = 2147483647;
 
     //PDM_03
     msg.buf[0] = messageCount100Hz; // counter
@@ -815,7 +786,7 @@ static void CALC_SEND_CAN()
     msg.buf[5] = WP.currentMin;
     msg.buf[6] = WP.currentMin >> 8;
     msg.buf[7] = 0; //
-    CAN_DATA_SEND(0x99, 8, 1); // 100Hz
+    CAN_DATA_SEND(0x99, 8, 0); // 100Hz
 
     WP.currentMax = -2147483647;
     WP.currentAvg = 0;
@@ -830,7 +801,7 @@ static void CALC_SEND_CAN()
     msg.buf[5] = PDM.currentMin;
     msg.buf[6] = PDM.currentMin >> 8;
     msg.buf[7] = 0; //
-    CAN_DATA_SEND(0x9A, 8, 1); // 100Hz
+    CAN_DATA_SEND(0x9A, 8, 0); // 100Hz
 
     PDM.currentMax = -2147483647;
     PDM.currentAvg = 0;
@@ -845,7 +816,7 @@ static void CALC_SEND_CAN()
     msg.buf[5] = FUEL.currentMin;
     msg.buf[6] = FUEL.currentMin >> 8;
     msg.buf[7] = 0; //
-    CAN_DATA_SEND(0x9B, 8, 1); // 100Hz
+    CAN_DATA_SEND(0x9B, 8, 0); // 100Hz
 
     FUEL.currentMax = -2147483647;
     FUEL.currentAvg = 0;
@@ -860,7 +831,7 @@ static void CALC_SEND_CAN()
     msg.buf[5] = FANR.voltMin;
     msg.buf[6] = FANR.voltMin >> 8;
     msg.buf[7] = 0; //
-    CAN_DATA_SEND(0x9C, 8, 1); // 100Hz
+    CAN_DATA_SEND(0x9C, 8, 0); // 100Hz
 
     FANR.voltAvg = 0;
     FANR.voltMax = -2147483647;
@@ -875,7 +846,7 @@ static void CALC_SEND_CAN()
     msg.buf[5] = FANL.voltMin;
     msg.buf[6] = FANL.voltMin >> 8;
     msg.buf[7] = 0; //
-    CAN_DATA_SEND(0x9D, 8, 1); // 100Hz
+    CAN_DATA_SEND(0x9D, 8, 0); // 100Hz
 
     FANL.voltMax = -2147483647;
     FANL.voltAvg = 0;
@@ -890,7 +861,7 @@ static void CALC_SEND_CAN()
     msg.buf[5] = WP.voltMin;
     msg.buf[6] = WP.voltMin >> 8;
     msg.buf[7] = 0; //
-    CAN_DATA_SEND(0x9E, 8, 1); // 100Hz
+    CAN_DATA_SEND(0x9E, 8, 0); // 100Hz
 
     WP.voltMax = -2147483647;
     WP.voltAvg = 0;
@@ -905,7 +876,7 @@ static void CALC_SEND_CAN()
     msg.buf[5] = PDM.voltMin;
     msg.buf[6] = PDM.voltMin >> 8;
     msg.buf[7] = 0; //
-    CAN_DATA_SEND(0x9F, 8, 1); // 100Hz
+    CAN_DATA_SEND(0x9F, 8, 0); // 100Hz
 
     PDM.voltMax = -2147483647;
     PDM.voltAvg = 0;
@@ -920,7 +891,7 @@ static void CALC_SEND_CAN()
     msg.buf[5] = FUEL.voltMin;
     msg.buf[6] = FUEL.voltMin >> 8;
     msg.buf[7] = 0; //
-    CAN_DATA_SEND(0xA0, 8, 1); // 100Hz
+    CAN_DATA_SEND(0xA0, 8, 0); // 100Hz
 
     FUEL.voltMax = -2147483647;
     FUEL.voltAvg = 0;
@@ -935,7 +906,7 @@ static void CALC_SEND_CAN()
     msg.buf[5] = MAIN.voltMin;
     msg.buf[6] = MAIN.voltMin >> 8;
     msg.buf[7] = 0; //
-    CAN_DATA_SEND(0xA1, 8, 1); // 100Hz
+    CAN_DATA_SEND(0xA1, 8, 0); // 100Hz
 
     MAIN.voltMax = -2147483647;
     MAIN.voltAvg = 0;
@@ -950,7 +921,7 @@ static void CALC_SEND_CAN()
     msg.buf[5] = DATA.voltMin;
     msg.buf[6] = DATA.voltMin >> 8;
     msg.buf[7] = 0; //
-    CAN_DATA_SEND(0xA2, 8, 1); // 100Hz
+    CAN_DATA_SEND(0xA2, 8, 0); // 100Hz
 
     DATA.voltMax = -2147483647;
     DATA.voltAvg = 0;
@@ -965,7 +936,7 @@ static void CALC_SEND_CAN()
     msg.buf[5] = 0;
     msg.buf[6] = 0;
     msg.buf[7] = 0; //
-    CAN_DATA_SEND(0xA3, 8, 1); // 100Hz
+    CAN_DATA_SEND(0xA3, 8, 0); // 100Hz
 
     // message for PWM update signal (testing; temp)
     msg.buf[0] = 0;
@@ -976,7 +947,7 @@ static void CALC_SEND_CAN()
     msg.buf[5] = 0;
     msg.buf[6] = 0;
     msg.buf[7] = 0;
-    CAN_DATA_SEND(0x96, 8, 1);
+    CAN_DATA_SEND(0x96, 8, 0);
 
 
   }
