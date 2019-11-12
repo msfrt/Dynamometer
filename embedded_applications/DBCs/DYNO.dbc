@@ -42,6 +42,14 @@ BO_ 3221225472 VECTOR__INDEPENDENT_SIG_MSG: 0 Vector__XXX
  SG_ PDM_counter06 : 0|4@1+ (1,0) [0|0] "" Vector__XXX
  SG_ PDM_counter01 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
 
+BO_ 121 ETC_output: 8 Vector__XXX
+ SG_ ETC_status : 0|8@1- (0.1,0) [0|100] "" Vector__XXX
+ SG_ ETC_throttlePosition : 8|8@1- (0.1,0) [0|100] "" Vector__XXX
+
+BO_ 120 ETC_request: 2 Vector__XXX
+ SG_ ETC_throttleRequest : 0|8@1- (0.1,0) [0|100] "" Vector__XXX
+ SG_ ETC_rpmRequest : 8|8@1- (0.1,0) [0|100] "" Vector__XXX
+
 BO_ 1519 M400_dataSet2: 8 M400
  SG_ M400_rowCounterDataSet2 M : 0|8@1+ (1,0) [0|255] "" Vector__XXX
  SG_ M400_oilTemp m18 : 55|16@0- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
@@ -198,6 +206,13 @@ BO_ 150 PDM_00: 8 PDM
 
 CM_ BU_ PDM "Power Distrubution Module";
 CM_ BO_ 3221225472 "This is a message for not used signals, created by Vector CANdb++ DBC OLE DB Provider.";
+CM_ SG_ 121 ETC_status "0 = idle;
+1 = throttle position request;
+2 = rpm override request;
+3 = error;";
+CM_ SG_ 121 ETC_throttlePosition "throttle output from the ETC module";
+CM_ SG_ 120 ETC_throttleRequest "throttle request sent to ETC module";
+CM_ SG_ 120 ETC_rpmRequest "rpm request sent to ETC module";
 CM_ SG_ 163 PDM_wpPWM "The PWM rate of the waterpump";
 CM_ SG_ 163 PDM_boardTemp "PDM board temperature";
 CM_ SG_ 162 PDM_dataVoltMin "voltage of the data circuit";
