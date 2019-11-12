@@ -46,9 +46,9 @@ BO_ 121 ETC_output: 8 Vector__XXX
  SG_ ETC_status : 0|8@1- (0.1,0) [0|100] "" Vector__XXX
  SG_ ETC_throttlePosition : 8|8@1- (0.1,0) [0|100] "" Vector__XXX
 
-BO_ 120 ETC_request: 2 Vector__XXX
+BO_ 120 ETC_request: 8 Vector__XXX
  SG_ ETC_throttleRequest : 0|8@1- (0.1,0) [0|100] "" Vector__XXX
- SG_ ETC_rpmRequest : 8|8@1- (0.1,0) [0|100] "" Vector__XXX
+ SG_ ETC_rpmRequest : 8|16@1- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
 
 BO_ 1519 M400_dataSet2: 8 M400
  SG_ M400_rowCounterDataSet2 M : 0|8@1+ (1,0) [0|255] "" Vector__XXX
