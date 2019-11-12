@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<Panel Type="Vector.CANalyzer.Panels.PanelSerializer, Vector.CANalyzer.Panels.Serializer, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null">
+  <Object Type="Vector.CANalyzer.Panels.Runtime.Panel, Vector.CANalyzer.Panels.Common, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="Panel" Children="Controls" ControlName="ETC_cluster">
+    <Object Type="Vector.CANalyzer.Panels.Design.StaticTextControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="StaticTextControl2" Children="Controls" ControlName="Static Text 2">
+      <Property Name="Name">StaticTextControl2</Property>
+      <Property Name="Size">159, 13</Property>
+      <Property Name="Location">3, 82</Property>
+      <Property Name="Text">Created by Dave Yonkers, 2019</Property>
+    </Object>
+    <Object Type="Vector.CANalyzer.Panels.Design.PictureBoxControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="PictureBoxControl1" ControlName="Picture Box">
+      <Property Name="Name">PictureBoxControl1</Property>
+      <Property Name="Size">377, 73</Property>
+      <Property Name="Location">3, 3</Property>
+      <Property Name="ImageFile">..\..\..\..\..\OneDrive - Michigan State University\Formula\Website\Logos\SR_Logos_PNG\High_Res\SR_WordMark_2019_Green.png</Property>
+    </Object>
+    <Object Type="Vector.CANalyzer.Panels.Design.LCDControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="LCDControl1" ControlName="LCD Control">
+      <Property Name="Name">LCDControl1</Property>
+      <Property Name="Size">141, 50</Property>
+      <Property Name="Location">3, 199</Property>
+      <Property Name="NumberIntDigits">3</Property>
+      <Property Name="SymbolConfiguration">4;16;Vector;;;ETC_throttleRequest;2;;;-1</Property>
+    </Object>
+    <Object Type="Vector.CANalyzer.Panels.Design.StaticTextControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="StaticTextControl1" Children="Controls" ControlName="Static Text">
+      <Property Name="Name">StaticTextControl1</Property>
+      <Property Name="Size">86, 13</Property>
+      <Property Name="Location">3, 136</Property>
+      <Property Name="Text">Throttle Request</Property>
+    </Object>
+    <Object Type="Vector.CANalyzer.Panels.Design.TrackBarControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="TrackBarControl1" Children="Controls" ControlName="Track Bar">
+      <Property Name="Name">TrackBarControl1</Property>
+      <Property Name="Size">433, 47</Property>
+      <Property Name="Location">3, 155</Property>
+      <Property Name="Maximum">100</Property>
+      <Property Name="TickFrequency">5</Property>
+      <Property Name="SmallChangeDouble">0.1</Property>
+      <Property Name="TickFrequencyDouble">5</Property>
+      <Property Name="MaximumDouble">100</Property>
+      <Property Name="SymbolConfiguration">4;16;Vector;;;ETC_throttleRequest;2;;;-1</Property>
+      <Property Name="TabIndex">0</Property>
+    </Object>
+    <Property Name="Name">Panel</Property>
+    <Property Name="Size">1007, 620</Property>
+  </Object>
+</Panel>

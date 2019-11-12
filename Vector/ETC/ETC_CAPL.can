@@ -1,0 +1,17 @@
+/*@!Encoding:1252*/
+includes
+{
+  
+}
+
+variables
+{
+  message ETC_request msg_ETC_request; // decleration of message into a variable 
+}
+
+on sysvar Vector::ETC_throttleRequest
+{
+  // assigns the ETC_throttleRequest system value to the message byte
+  msg_ETC_request.ETC_throttleRequest = @this;
+  output (msg_ETC_request);
+}
