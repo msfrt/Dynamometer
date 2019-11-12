@@ -11,7 +11,7 @@
       <Property Name="Name">PictureBoxControl1</Property>
       <Property Name="Size">377, 73</Property>
       <Property Name="Location">3, 3</Property>
-      <Property Name="ImageFile">..\..\..\..\..\OneDrive - Michigan State University\Formula\Website\Logos\SR_Logos_PNG\High_Res\SR_WordMark_2019_Green.png</Property>
+      <Property Name="ImageFile">logo.png</Property>
     </Object>
     <Object Type="Vector.CANalyzer.Panels.Design.LCDControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="LCDControl1" ControlName="LCD Control">
       <Property Name="Name">LCDControl1</Property>

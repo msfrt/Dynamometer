@@ -6,12 +6,31 @@ includes
 
 variables
 {
-  message ETC_request msg_ETC_request; // decleration of message into a variable 
+  int ETC_freq = 20; // in Hz (edit this one)
+  int ETC_freq_ms;
+  msTimer etc_update_timer;
+  message ETC_request msg_ETC_request; // decleration of message into a variable
+}
+
+on start // this gets called only on measurement start
+{
+  ETC_freq_ms = 1000 / ETC_freq; // calculate the ms for desired freq
+  setTimer(etc_update_timer, ETC_freq_ms); // set the initial timer
 }
 
 on sysvar Vector::ETC_throttleRequest
 {
   // assigns the ETC_throttleRequest system value to the message byte
-  msg_ETC_request.ETC_throttleRequest = @this;
-  output (msg_ETC_request);
+  //msg_ETC_request.ETC_throttleRequest = @this;
+  //output (msg_ETC_request);
 }
+
+on timer etc_update_timer
+{
+  msg_ETC_request.ETC_throttleRequest = @Vector::ETC_throttleRequest;
+  //output(msg_ETC_request);
+  setTimer(etc_update_timer, ETC_freq_ms);
+  write("ETC PERCENT: %f", @Vector::ETC_throttleRequest);
+}
+
+
