@@ -46,9 +46,11 @@ BO_ 121 ETC_output: 8 Vector__XXX
  SG_ ETC_status : 0|8@1- (0.1,0) [0|100] "" Vector__XXX
  SG_ ETC_throttlePosition : 8|8@1- (0.1,0) [0|100] "" Vector__XXX
 
-BO_ 120 ETC_request: 8 Vector__XXX
- SG_ ETC_throttleRequest : 0|8@1- (0.1,0) [0|100] "" Vector__XXX
- SG_ ETC_rpmRequest : 8|16@1- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
+BO_ 120 USER_request1: 6 Vector__XXX
+ SG_ USER_wpOverrideStatus : 24|8@1- (1,0) [-128|127] "V" Vector__XXX
+ SG_ USER_wpOverridePWM : 32|16@1- (1,0) [-32768|32767] "V" Vector__XXX
+ SG_ USER_throttleRequest : 0|8@1- (0.1,0) [0|100] "" Vector__XXX
+ SG_ USER_rpmRequest : 8|16@1- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
 
 BO_ 1519 M400_dataSet2: 8 M400
  SG_ M400_rowCounterDataSet2 M : 0|8@1+ (1,0) [0|255] "" Vector__XXX
@@ -174,7 +176,7 @@ BO_ 159 PDM_09: 8 PDM
  SG_ PDM_counter09 : 0|4@1+ (1,0) [0|0] "" Vector__XXX
 
 BO_ 158 PDM_08: 8 PDM
- SG_ PDM_wpVoltMin : 40|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
+ SG_ USER_wpOverrideStatus : 40|8@1- (1,0) [-128|127] "V" Vector__XXX
  SG_ PDM_wpVoltMax : 8|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ PDM_wpVoltAvg : 24|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ PDM_counter08 : 0|4@1+ (1,0) [0|0] "" Vector__XXX
@@ -211,8 +213,10 @@ CM_ SG_ 121 ETC_status "0 = idle;
 2 = rpm override request;
 3 = error;";
 CM_ SG_ 121 ETC_throttlePosition "throttle output from the ETC module";
-CM_ SG_ 120 ETC_throttleRequest "throttle request sent to ETC module";
-CM_ SG_ 120 ETC_rpmRequest "rpm request sent to ETC module";
+CM_ SG_ 120 USER_wpOverrideStatus "the voltage of the water pump";
+CM_ SG_ 120 USER_wpOverridePWM "the voltage of the water pump";
+CM_ SG_ 120 USER_throttleRequest "throttle request sent to ETC module";
+CM_ SG_ 120 USER_rpmRequest "rpm request sent to ETC module";
 CM_ SG_ 163 PDM_wpPWM "The PWM rate of the waterpump";
 CM_ SG_ 163 PDM_boardTemp "PDM board temperature";
 CM_ SG_ 162 PDM_dataVoltMin "voltage of the data circuit";
@@ -227,7 +231,7 @@ CM_ SG_ 160 PDM_fuelVoltAvg "voltage of the fuel circuit";
 CM_ SG_ 159 PDM_pdmVoltMin "voltage of the PDM";
 CM_ SG_ 159 PDM_pdmVoltMax "voltage of the PDM";
 CM_ SG_ 159 PDM_pdmVoltAvg "voltage of the PDM";
-CM_ SG_ 158 PDM_wpVoltMin "the voltage of the water pump";
+CM_ SG_ 158 USER_wpOverrideStatus "the voltage of the water pump";
 CM_ SG_ 158 PDM_wpVoltMax "the voltage of the water pump";
 CM_ SG_ 158 PDM_wpVoltAvg "the voltage of the water pump";
 CM_ SG_ 153 PDM_wpCurrentMin "the current going through the water pump";
