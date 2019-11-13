@@ -6,16 +6,16 @@ includes
 
 variables
 {
-  int ETC_freq = 20; // in Hz (edit this one)
-  int ETC_freq_ms;
-  msTimer etc_update_timer;
-  message ETC_request msg_ETC_request; // decleration of message into a variable
+  int USER_request_freq = 20; // in Hz (edit this one)
+  int USER_request_freq_ms;
+  msTimer USER_request_timer;
+  message USER_request1 USER_request1_msg; // decleration of message into a variable
 }
 
 on start // this gets called only on measurement start
 {
-  ETC_freq_ms = 1000 / ETC_freq; // calculate the ms for desired freq
-  setTimer(etc_update_timer, ETC_freq_ms); // set the initial timer
+  USER_request_freq_ms = 1000 / USER_request_freq; // calculate the ms for desired freq
+  setTimer(USER_request_timer, USER_request_freq_ms); // set the initial timer
 }
 
 on sysvar Vector::ETC_throttleRequest
