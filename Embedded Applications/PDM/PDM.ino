@@ -45,8 +45,9 @@ unsigned long LEDTimer40Hz      = 0;
 // initialize a variable to keep track of the led
 bool LED_on = false;
 
-// initialize the variable for water pump override
+// initialize the variables for water pump override
 bool PUMP_on = false;
+int PUMP_PWMoverride = 0;
 
 // initialize the CAN message counters
 uint8_t messageCount100Hz = 0;
@@ -159,7 +160,7 @@ typedef struct
 }canSensor;
 
 // CAN0 sensors
-canSensor CAN0_engTemp, CAN0_rpm;
+canSensor CAN0_engTemp, CAN0_rpm, CAN0_wpOverrideSatus, CAN0_wpOverridePWM;
 
 // BatteryVoltAvg used for fan and water pump speed.
 // values updated of PDM volt values after calculated in CAN send function
@@ -332,12 +333,12 @@ void loop() {
 
     // this if statement is for the WP override button. (analogread <= 100 for a small buffer);
     // REPLACE WITH analogRead(A8) <= 100, WHERE A8 IS THE PIN OF YOUR CHOICE, AND THE INT IS THE THRESHOLD VALUE
-    if (true){
+    if (CAN0_wpOverrideSatus.value == 0){
       // this if statement only writes to the pin if the PWM changes from it's previous value (held by livePWM2)
       if (WP_livePWM != WP_livePWM2) {WP_livePWM2 = WP_livePWM; analogWrite(A8, WP_livePWM);}
     } else {
       // keep dat pump on
-      analogWrite(A8, 255);
+      analogWrite(A8, CAN0_wpOverridePWM.value);
     }
   }
 
@@ -1013,7 +1014,18 @@ void CAN_READ()
 
     switch(rxID)
     {
-      // MOTEC M400 MESSAGES *KEEP AT TOP*
+
+      // user override msg from PC
+      case 120:
+      {
+        CAN0_wpOverrideSatus.value = rxData[3];
+        CAN0_wpOverridePWM.value = rxData[5] * 256 + rxData[4];
+        break;
+      }
+
+
+
+      // MOTEC M400 MESSAGES
       // M400_dataSet2
       // ID 0x5F0
       case 1520:
