@@ -46,7 +46,6 @@ unsigned long LEDTimer40Hz      = 0;
 bool LED_on = false;
 
 // initialize the variables for water pump override
-bool PUMP_on = false;
 int PUMP_PWMoverride = 0;
 
 // initialize the CAN message counters
@@ -160,7 +159,7 @@ typedef struct
 }canSensor;
 
 // CAN0 sensors
-canSensor CAN0_engTemp, CAN0_rpm, CAN0_wpOverrideSatus, CAN0_wpOverridePWM;
+canSensor CAN0_engTemp, CAN0_rpm, CAN0_wpOverrideStatus, CAN0_wpOverridePercent;
 
 // BatteryVoltAvg used for fan and water pump speed.
 // values updated of PDM volt values after calculated in CAN send function
@@ -333,12 +332,14 @@ void loop() {
 
     // this if statement is for the WP override button. (analogread <= 100 for a small buffer);
     // REPLACE WITH analogRead(A8) <= 100, WHERE A8 IS THE PIN OF YOUR CHOICE, AND THE INT IS THE THRESHOLD VALUE
-    if (CAN0_wpOverrideSatus.value == 0){
+    if (CAN0_wpOverrideStatus.value != 1){
       // this if statement only writes to the pin if the PWM changes from it's previous value (held by livePWM2)
-      if (WP_livePWM != WP_livePWM2) {WP_livePWM2 = WP_livePWM; analogWrite(A8, WP_livePWM);}
+      analogWrite(A8, WP_livePWM);
+
     } else {
       // keep dat pump on
-      analogWrite(A8, CAN0_wpOverridePWM.value);
+      PUMP_PWMoverride = map(CAN0_wpOverridePercent.value, 0, 100, 0, 255);
+      analogWrite(A8, PUMP_PWMoverride);
     }
   }
 
@@ -1018,8 +1019,8 @@ void CAN_READ()
       // user override msg from PC
       case 120:
       {
-        CAN0_wpOverrideSatus.value = rxData[3];
-        CAN0_wpOverridePWM.value = rxData[5] * 256 + rxData[4];
+        CAN0_wpOverrideStatus.value = rxData[3];
+        CAN0_wpOverridePercent.value = rxData[5] * 256 + rxData[4];
         break;
       }
 

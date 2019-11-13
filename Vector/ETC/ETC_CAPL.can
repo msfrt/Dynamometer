@@ -8,6 +8,7 @@ variables
 {
   int USER_request_freq = 20; // in Hz (edit this one)
   int USER_request_freq_ms;
+  int USER_wpOverridePercent_int;
   msTimer USER_request_timer;
   message USER_request1 USER_request1_msg; // decleration of message into a variable
 }
@@ -18,19 +19,16 @@ on start // this gets called only on measurement start
   setTimer(USER_request_timer, USER_request_freq_ms); // set the initial timer
 }
 
-on sysvar Vector::ETC_throttleRequest
-{
-  // assigns the ETC_throttleRequest system value to the message byte
-  //msg_ETC_request.ETC_throttleRequest = @this;
-  //output (msg_ETC_request);
-}
 
-on timer etc_update_timer
+on timer USER_request_timer
 {
-  msg_ETC_request.ETC_throttleRequest = @Vector::ETC_throttleRequest;
-  //output(msg_ETC_request);
-  setTimer(etc_update_timer, ETC_freq_ms);
-  write("ETC PERCENT: %f", @Vector::ETC_throttleRequest);
+  // reset the timer
+  setTimer(USER_request_timer, USER_request_freq_ms);
+  
+  USER_request1_msg.USER_wpOverrideStatus = @Vector::USER_wpOverrideStatus;
+  USER_request1_msg.USER_wpOverridePercent = @Vector::USER_wpOverridePercent;
+  output(USER_request1_msg);
+  //write("PUMP: %i", @Vector::USER_wpOverrideStatus);
 }
 
 

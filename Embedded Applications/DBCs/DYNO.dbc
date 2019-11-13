@@ -48,7 +48,7 @@ BO_ 121 ETC_output: 8 Vector__XXX
 
 BO_ 120 USER_request1: 6 Vector__XXX
  SG_ USER_wpOverrideStatus : 24|8@1- (1,0) [-128|127] "V" Vector__XXX
- SG_ USER_wpOverridePWM : 32|16@1- (1,0) [-32768|32767] "V" Vector__XXX
+ SG_ USER_wpOverridePercent : 32|16@1- (1,0) [-32768|32767] "V" Vector__XXX
  SG_ USER_throttleRequest : 0|8@1- (0.1,0) [0|100] "" Vector__XXX
  SG_ USER_rpmRequest : 8|16@1- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
 
@@ -214,7 +214,7 @@ CM_ SG_ 121 ETC_status "0 = idle;
 3 = error;";
 CM_ SG_ 121 ETC_throttlePosition "throttle output from the ETC module";
 CM_ SG_ 120 USER_wpOverrideStatus "the voltage of the water pump";
-CM_ SG_ 120 USER_wpOverridePWM "the voltage of the water pump";
+CM_ SG_ 120 USER_wpOverridePercent "the voltage of the water pump";
 CM_ SG_ 120 USER_throttleRequest "throttle request sent to ETC module";
 CM_ SG_ 120 USER_rpmRequest "rpm request sent to ETC module";
 CM_ SG_ 163 PDM_wpPWM "The PWM rate of the waterpump";

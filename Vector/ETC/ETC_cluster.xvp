@@ -1,9 +1,169 @@
 <?xml version="1.0"?>
 <Panel Type="Vector.CANalyzer.Panels.PanelSerializer, Vector.CANalyzer.Panels.Serializer, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null">
   <Object Type="Vector.CANalyzer.Panels.Runtime.Panel, Vector.CANalyzer.Panels.Common, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="Panel" Children="Controls" ControlName="ETC_cluster">
+    <Object Type="Vector.CANalyzer.Panels.Design.GroupBoxControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="GroupBoxControl2" Children="Controls" ControlName="Group Box 2">
+      <Object Type="Vector.CANalyzer.Panels.Design.StaticTextControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="StaticTextControl5" Children="Controls" ControlName="Static Text">
+        <Property Name="Name">StaticTextControl5</Property>
+        <Property Name="Size">50, 26</Property>
+        <Property Name="Location">380, 217</Property>
+        <Property Name="TextAlign">MiddleCenter</Property>
+        <Property Name="Text">Engine
+Temp</Property>
+      </Object>
+      <Object Type="Vector.CANalyzer.Panels.Design.ProgressBarControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="ProgressBarControl4" Children="Controls" ControlName="Progress Bar">
+        <Property Name="Name">ProgressBarControl4</Property>
+        <Property Name="Size">50, 197</Property>
+        <Property Name="Location">380, 11</Property>
+        <Property Name="OriginValue">0</Property>
+        <Property Name="Alignment">RightBottom</Property>
+        <Property Name="Maximum">130</Property>
+        <Property Name="Orientation">Vertical</Property>
+        <Property Name="ValuePos">Top</Property>
+        <Property Name="UseWindowsStyle">False</Property>
+        <Property Name="DecimalPlaces">1</Property>
+        <Property Name="ValueSize">50, 13</Property>
+        <Property Name="SymbolConfiguration">4;2;DYNO;M400;M400_dataSet2;M400_engineTemp;1;CAN1;;-1</Property>
+      </Object>
+      <Object Type="Vector.CANalyzer.Panels.Design.StaticTextControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="StaticTextControl4" Children="Controls" ControlName="Static Text">
+        <Property Name="Name">StaticTextControl4</Property>
+        <Property Name="Size">50, 26</Property>
+        <Property Name="Location">442, 217</Property>
+        <Property Name="TextAlign">MiddleCenter</Property>
+        <Property Name="Text">Fuel
+Pressue</Property>
+      </Object>
+      <Object Type="Vector.CANalyzer.Panels.Design.ProgressBarControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="ProgressBarControl3" Children="Controls" ControlName="Progress Bar">
+        <Property Name="Name">ProgressBarControl3</Property>
+        <Property Name="Size">50, 196</Property>
+        <Property Name="Location">442, 12</Property>
+        <Property Name="OriginValue">0</Property>
+        <Property Name="Alignment">RightBottom</Property>
+        <Property Name="Maximum">80</Property>
+        <Property Name="Orientation">Vertical</Property>
+        <Property Name="ValuePos">Top</Property>
+        <Property Name="UseWindowsStyle">False</Property>
+        <Property Name="DecimalPlaces">1</Property>
+        <Property Name="ValueSize">50, 13</Property>
+        <Property Name="SymbolConfiguration">4;2;DYNO;M400;M400_dataSet2;M400_fuelPressure;1;CAN1;;-1</Property>
+      </Object>
+      <Object Type="Vector.CANalyzer.Panels.Design.StaticTextControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="StaticTextControl3" Children="Controls" ControlName="Static Text">
+        <Property Name="Name">StaticTextControl3</Property>
+        <Property Name="Size">50, 26</Property>
+        <Property Name="Location">317, 217</Property>
+        <Property Name="TextAlign">MiddleCenter</Property>
+        <Property Name="Text">Oil
+Temp</Property>
+      </Object>
+      <Object Type="Vector.CANalyzer.Panels.Design.ProgressBarControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="ProgressBarControl2" Children="Controls" ControlName="Progress Bar">
+        <Property Name="Name">ProgressBarControl2</Property>
+        <Property Name="Size">50, 195</Property>
+        <Property Name="Location">317, 11</Property>
+        <Property Name="OriginValue">0</Property>
+        <Property Name="Alignment">RightBottom</Property>
+        <Property Name="Maximum">130</Property>
+        <Property Name="Orientation">Vertical</Property>
+        <Property Name="ValuePos">Top</Property>
+        <Property Name="UseWindowsStyle">False</Property>
+        <Property Name="DecimalPlaces">1</Property>
+        <Property Name="ValueSize">50, 13</Property>
+        <Property Name="SymbolConfiguration">4;2;DYNO;M400;M400_dataSet2;M400_oilTemp;1;CAN1;;-1</Property>
+      </Object>
+      <Object Type="Vector.CANalyzer.Panels.Design.StaticTextControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="StaticTextControl1" Children="Controls" ControlName="Static Text">
+        <Property Name="Name">StaticTextControl1</Property>
+        <Property Name="Size">50, 26</Property>
+        <Property Name="Location">255, 217</Property>
+        <Property Name="TextAlign">MiddleCenter</Property>
+        <Property Name="Text">Oil
+Pressure</Property>
+      </Object>
+      <Object Type="Vector.CANalyzer.Panels.Design.AnalogGaugeControl, Vector.CANalyzer.Panels.AnalogGauge, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="AnalogGaugeControl1" ControlName="Analog Gauge">
+        <Property Name="Name">AnalogGaugeControl1</Property>
+        <Property Name="Size">224, 180</Property>
+        <Property Name="Location">11, 24</Property>
+        <Property Name="IsMargin">False</Property>
+        <Property Name="CriticalProps" Member="AAEAAAD/////AQAAAAAAAAAEAQAAAC9TeXN0ZW0uUmVmbGVjdGlvbi5NZW1iZXJJbmZvU2VyaWFsaXphdGlvbkhvbGRlcgcAAAAETmFtZQxBc3NlbWJseU5hbWUJQ2xhc3NOYW1lCVNpZ25hdHVyZQpTaWduYXR1cmUyCk1lbWJlclR5cGUQR2VuZXJpY0FyZ3VtZW50cwEBAQEBAAMIDVN5c3RlbS5UeXBlW10GAgAAAAUuY3RvcgYDAAAAW1ZlY3Rvci5DQU5hbHl6ZXIuUGFuZWxzLkFuYWxvZ0dhdWdlLCBWZXJzaW9uPTguMi44MC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPW51bGwGBAAAADZWZWN0b3IuQ0FOYWx5emVyLlBhbmVscy5EZXNpZ24uR2F1Z2VDcml0aWNhbFByb3BlcnRpZXMGBQAAADJWb2lkIC5jdG9yKERvdWJsZSwgRG91YmxlLCBEb3VibGUsIERvdWJsZSwgRG91YmxlKQYGAAAAUC5jdG9yKFN5c3RlbS5Eb3VibGUsIFN5c3RlbS5Eb3VibGUsIFN5c3RlbS5Eb3VibGUsIFN5c3RlbS5Eb3VibGUsIFN5c3RlbS5Eb3VibGUpAQAAAAoL">
+          <Argument>0</Argument>
+          <Argument>14000</Argument>
+          <Argument>0</Argument>
+          <Argument>8000</Argument>
+          <Argument>11000</Argument>
+        </Property>
+        <Property Name="GaugeFont">Microsoft Sans Serif, 8pt</Property>
+        <Property Name="ArrowWidth">2</Property>
+        <Property Name="LegendText">RPM</Property>
+        <Property Name="IsFrame">False</Property>
+        <Property Name="ScaleAngle">115</Property>
+        <Property Name="SymbolConfiguration">4;2;DYNO;M400;M400_dataSet1;M400_rpm;1;CAN1;;-1</Property>
+      </Object>
+      <Object Type="Vector.CANalyzer.Panels.Design.LCDControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="LCDControl2" ControlName="LCD Control 2">
+        <Property Name="Name">LCDControl2</Property>
+        <Property Name="Size">130, 37</Property>
+        <Property Name="Location">59, 211</Property>
+        <Property Name="DecimalPlaces">0</Property>
+        <Property Name="ColorOff">Black</Property>
+        <Property Name="SegmentStrength">5</Property>
+        <Property Name="SymbolConfiguration">4;2;DYNO;M400;M400_dataSet1;M400_rpm;1;CAN1;;-1</Property>
+      </Object>
+      <Object Type="Vector.CANalyzer.Panels.Design.ProgressBarControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="ProgressBarControl1" Children="Controls" ControlName="Progress Bar">
+        <Property Name="Name">ProgressBarControl1</Property>
+        <Property Name="Size">50, 194</Property>
+        <Property Name="Location">255, 11</Property>
+        <Property Name="OriginValue">0</Property>
+        <Property Name="Alignment">RightBottom</Property>
+        <Property Name="Orientation">Vertical</Property>
+        <Property Name="ValuePos">Top</Property>
+        <Property Name="UseWindowsStyle">False</Property>
+        <Property Name="DecimalPlaces">1</Property>
+        <Property Name="ValueSize">50, 13</Property>
+        <Property Name="SymbolConfiguration">4;2;DYNO;M400;M400_dataSet1;M400_oilPressure;1;CAN1;;-1</Property>
+      </Object>
+      <Property Name="Name">GroupBoxControl2</Property>
+      <Property Name="Size">511, 257</Property>
+      <Property Name="Location">406, 3</Property>
+      <Property Name="Text">Engine Vitals</Property>
+      <Property Name="TabIndex">20</Property>
+    </Object>
+    <Object Type="Vector.CANalyzer.Panels.Design.GroupBoxControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="GroupBoxControl1" Children="Controls" ControlName="Group Box">
+      <Object Type="Vector.CANalyzer.Panels.Design.SwitchControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="SwitchControl1" ControlName="Switch/Indicator">
+        <Property Name="Name">SwitchControl1</Property>
+        <Property Name="Size">23, 30</Property>
+        <Property Name="Location">8, 16</Property>
+        <Property Name="StateCnt">2</Property>
+        <Property Name="Activation">Left</Property>
+        <Property Name="SwitchValues">1;2;0;1</Property>
+        <Property Name="SymbolConfiguration">4;16;Vector;;;USER_wpOverrideStatus;1;;;-1</Property>
+        <Property Name="TabIndex">9</Property>
+      </Object>
+      <Object Type="Vector.CANalyzer.Panels.Design.TrackBarControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="TrackBarControl1" Children="Controls" ControlName="Track Bar">
+        <Property Name="Name">TrackBarControl1</Property>
+        <Property Name="Size">252, 31</Property>
+        <Property Name="Location">34, 22</Property>
+        <Property Name="Maximum">100</Property>
+        <Property Name="TickFrequency">5</Property>
+        <Property Name="TickFrequencyDouble">5</Property>
+        <Property Name="MaximumDouble">100</Property>
+        <Property Name="SymbolConfiguration">4;16;Vector;;;USER_wpOverridePercent;1;;;-1</Property>
+        <Property Name="TabIndex">0</Property>
+      </Object>
+      <Object Type="Vector.CANalyzer.Panels.Design.LCDControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="LCDControl1" ControlName="LCD Control">
+        <Property Name="Name">LCDControl1</Property>
+        <Property Name="Size">77, 34</Property>
+        <Property Name="Location">289, 16</Property>
+        <Property Name="NumberIntDigits">3</Property>
+        <Property Name="DecimalPlaces">0</Property>
+        <Property Name="ColorOff">Black</Property>
+        <Property Name="SegmentStrength">5</Property>
+        <Property Name="SymbolConfiguration">4;16;Vector;;;USER_wpOverridePercent;1;;;-1</Property>
+      </Object>
+      <Property Name="Name">GroupBoxControl1</Property>
+      <Property Name="Size">377, 59</Property>
+      <Property Name="Location">3, 124</Property>
+      <Property Name="Text">Water Pump Override</Property>
+      <Property Name="TabIndex">18</Property>
+    </Object>
     <Object Type="Vector.CANalyzer.Panels.Design.StaticTextControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="StaticTextControl2" Children="Controls" ControlName="Static Text 2">
       <Property Name="Name">StaticTextControl2</Property>
-      <Property Name="Size">159, 13</Property>
+      <Property Name="Size">377, 13</Property>
       <Property Name="Location">3, 82</Property>
       <Property Name="Text">Created by Dave Yonkers, 2019</Property>
     </Object>
@@ -13,32 +173,7 @@
       <Property Name="Location">3, 3</Property>
       <Property Name="ImageFile">logo.png</Property>
     </Object>
-    <Object Type="Vector.CANalyzer.Panels.Design.LCDControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="LCDControl1" ControlName="LCD Control">
-      <Property Name="Name">LCDControl1</Property>
-      <Property Name="Size">141, 50</Property>
-      <Property Name="Location">3, 199</Property>
-      <Property Name="NumberIntDigits">3</Property>
-      <Property Name="SymbolConfiguration">4;16;Vector;;;ETC_throttleRequest;2;;;-1</Property>
-    </Object>
-    <Object Type="Vector.CANalyzer.Panels.Design.StaticTextControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="StaticTextControl1" Children="Controls" ControlName="Static Text">
-      <Property Name="Name">StaticTextControl1</Property>
-      <Property Name="Size">86, 13</Property>
-      <Property Name="Location">3, 136</Property>
-      <Property Name="Text">Throttle Request</Property>
-    </Object>
-    <Object Type="Vector.CANalyzer.Panels.Design.TrackBarControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="TrackBarControl1" Children="Controls" ControlName="Track Bar">
-      <Property Name="Name">TrackBarControl1</Property>
-      <Property Name="Size">433, 47</Property>
-      <Property Name="Location">3, 155</Property>
-      <Property Name="Maximum">100</Property>
-      <Property Name="TickFrequency">5</Property>
-      <Property Name="SmallChangeDouble">0.1</Property>
-      <Property Name="TickFrequencyDouble">5</Property>
-      <Property Name="MaximumDouble">100</Property>
-      <Property Name="SymbolConfiguration">4;16;Vector;;;ETC_throttleRequest;2;;;-1</Property>
-      <Property Name="TabIndex">0</Property>
-    </Object>
     <Property Name="Name">Panel</Property>
-    <Property Name="Size">1007, 620</Property>
+    <Property Name="Size">1143, 761</Property>
   </Object>
 </Panel>
