@@ -208,10 +208,11 @@ BO_ 150 PDM_00: 8 PDM
 
 CM_ BU_ PDM "Power Distrubution Module";
 CM_ BO_ 3221225472 "This is a message for not used signals, created by Vector CANdb++ DBC OLE DB Provider.";
-CM_ SG_ 121 ETC_status "0 = idle;
+CM_ SG_ 121 ETC_status "-1= unknown error;
+0 = idle;
 1 = throttle position request;
 2 = rpm override request;
-3 = error;";
+3 = signal timed-out;";
 CM_ SG_ 121 ETC_throttlePosition "throttle output from the ETC module";
 CM_ SG_ 120 USER_wpOverrideStatus "the voltage of the water pump";
 CM_ SG_ 120 USER_wpOverridePercent "the voltage of the water pump";
