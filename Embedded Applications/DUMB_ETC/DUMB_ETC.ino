@@ -5,13 +5,15 @@
 #include <FlexCAN.h>
 #include <kinetis_flexcan.h>
 
+// include the servo library
+#include <Servo.h>
+
 // include the custom timer library
-#include "Timer.h"
+#include "EasyTimer.h"
 
 // define message type - do not change these names
 static CAN_message_t msg; // this is the outgoing message buffer
 static CAN_message_t rxmsg; // this is the recieving message buffer
-
 
 
 // define the struct for CAN signals
@@ -25,11 +27,23 @@ typedef struct {
 } canSignal;
 
 // signals from the DBC that we want to read/send
-canSignal USER_throttleRequest, ETC_throttlePosition, ETC_status;
+canSignal USER_throttleRequest, USER_rpmRequest;
+canSignal ETC_throttlePosition, ETC_status;
+canSignal M400_throttlePosition, M400_rpm;
+
+// create timer variables
+EasyTimer can_timer_ETC_output(20); // creates a timer that sends at 20Hz
+
+// initializations for our servo
+Servo etc_servo;
+int etc_servo_pin = 0;
+int etc_servo_lowerb_deg = 0; // degrees
+int etc_servo_upperb_deg = 180; // degrees
+int etc_servo_timeout_safety_factor = 1000; // time in ms before the throttle needs to be shut
+int etc_servo_desired_throttle = 0;
+int etc_servo_output_angle = 0;
 
 
-// create timer variables 
-Timer can_send_timer(20); // creates a timer that sends at 20Hz
 
 
 void setup() {
@@ -40,27 +54,57 @@ void setup() {
   // Serial bus for arduino debugging
   Serial.begin(9600);
 
+  // attatch the servo to its pin
+  etc_servo.attach(etc_servo_pin);
+
+  // set the bounds for the user input (found in the CANalyzer GUI)
+  USER_throttleRequest.lower_bound = 0;
+  USER_throttleRequest.upper_bound = 100;
+
 }
 
 
 void loop() {
+  read_can();
+
+  // first we need to check if it's safe to open the throttle
+  if (USER_throttleRequest.last_recieve - millis() >= etc_servo_timeout_safety_factor){
+    etc_servo_desired_throttle = 0; // close it!!!
+  } else {
+    etc_servo_desired_throttle = USER_throttleRequest.value;
+  }
+
+  // map the desired throttle input (0-100) to the settable range of the servo
+  etc_servo_output_angle = map(etc_servo_desired_throttle,
+                               USER_throttleRequest.lower_bound, USER_throttleRequest.upper_bound,
+                               etc_servo_lowerb_deg, etc_servo_upperb_deg);
+
+  // write the angle to the servo
+  etc_servo.write(etc_servo_output_angle);
 
 
-  // to write a message, simply fill the message buffer and use Dave's handy sendCAN function. Beware, bit shifting
-  // can be VERY confusing, so be sure to read the tutorial in the OneNote. Also, verify the signal bit order (Intel
-  // or Motorola) in the DBC.
-  msg.buf[0] = my_intel_var; // this is the first 8 bits
-  msg.buf[1] = my_intel_var >> 8; // this is the last 8 bits
-  msg.buf[2] = 0; //empty
-  msg.buf[3] = 0;
-  msg.buf[4] = my_motorola_var >> 8; // this is the last 8 bits
-  msg.buf[5] = my_motorola_var; // this is the first 8 bits
-  msg.buf[6] = 69; // you can do this (as long as it's a maximum of 8-bits long)
-  msg.buf[7] = 0;
-  sendCAN(420, 8, 0); // here, we send an 8-byte message with ID 420 on CAN bus 0
+  messages_for_can();
+}
 
-  readCAN(); // generally speaking, we will try to read the CAN bus on every loop through the main function.
-  // essentially, we want to continuously check the bus in case a message appears.
+
+
+
+
+// this function is simply a place to store the can messages and their respective timers
+void messages_for_can(){
+
+  if (can_timer_ETC_output.check()){
+    // ETC_output, ID 121
+    msg.buf[0] = ETC_status.value;
+    msg.buf[1] = ETC_throttlePosition.value;
+    msg.buf[2] = 0;
+    msg.buf[3] = 0;
+    msg.buf[4] = 0;
+    msg.buf[5] = 0;
+    msg.buf[6] = 0;
+    msg.buf[7] = 0;
+    send_can(121, 8, 0);
+  }
 
 }
 
@@ -69,14 +113,13 @@ void loop() {
 
 // This function simplifies sending a can message. However, you must ensure that the message buffer "msg" has
 // all of the desired data in their respective bits before calling this function.
-void sendCAN(int id, int len, int busNo)
+void send_can(int id, int len, int busNo)
 {
   msg.len = len; //CAN message length unit: Byte (pretty much always 8 bits)
   msg.id = id; //CAN message ID (look at DBC to verify)
 
   switch(busNo)
   {
-    // if there was more than one bus, this is where you would put another case
     case 0:
       Can0.write(msg); // let 'er rip
       break;
@@ -84,7 +127,8 @@ void sendCAN(int id, int len, int busNo)
 }
 
 
-void readCAN()
+
+void read_can()
 {
 
   // "if a message was read on bus 0..."
@@ -107,21 +151,25 @@ void readCAN()
 
     switch(rxID){
 
-      case 420: // this is message with ID 420
-        // now, we can access the bits that we desire
-        my_intel_var = rxData[0] + rxData[1] * 256; // we multiply by 256, which is like shifting 8 bits
-        my_motorola_var = rxData[3] * 256 + rxData[4]; // opposite order!
-        break; // very important - do not forget to break
+      case 120: // USER_request1
+        USER_throttleRequest.value = rxData[0];
+        USER_rpmRequest.value = rxData[1] + rxData[2] * 256; // opposite order!
+        USER_throttleRequest.last_recieve = millis();
+        USER_rpmRequest.last_recieve = millis();
+        break; // break USER_request1
 
 
-      case 69: //let's say this is a multiplexed message
+      case 1520: // M400_dataSet1
         switch(rxMultID){
 
-          case 4: // this essentially means that the first byte (the multiplexer) == 4
-            my_motorola_var = rxData[3] * 256 + rxData[4];
+          case 9:
+            M400_rpm.value = rxData[6] * 256 + rxData[7];
+            break;
+          case 10:
+            M400_throttlePosition.value = rxData[2] * 256 + rxData[3];
             break;
         }
-        break; // break from message 69
+        break; // break M400_datsSet1
     }
 
   }
