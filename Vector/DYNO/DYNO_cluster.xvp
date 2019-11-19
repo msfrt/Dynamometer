@@ -101,7 +101,6 @@ Pressure</Property>
         <Property Name="Location">59, 211</Property>
         <Property Name="DecimalPlaces">0</Property>
         <Property Name="ColorOff">Black</Property>
-        <Property Name="SegmentStrength">5</Property>
         <Property Name="SymbolConfiguration">4;2;DYNO;M400;M400_dataSet1;M400_rpm;1;CAN1;;-1</Property>
       </Object>
       <Object Type="Vector.CANalyzer.Panels.Design.ProgressBarControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="ProgressBarControl1" Children="Controls" ControlName="Progress Bar">
@@ -152,7 +151,6 @@ Pressure</Property>
         <Property Name="NumberIntDigits">3</Property>
         <Property Name="DecimalPlaces">0</Property>
         <Property Name="ColorOff">Black</Property>
-        <Property Name="SegmentStrength">5</Property>
         <Property Name="SymbolConfiguration">4;16;Vector;;;USER_wpOverridePercent;1;;;-1</Property>
       </Object>
       <Property Name="Name">GroupBoxControl1</Property>
