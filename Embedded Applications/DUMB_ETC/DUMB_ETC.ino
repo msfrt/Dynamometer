@@ -33,13 +33,14 @@ canSignal M400_throttlePosition, M400_rpm;
 
 // create timer variables
 EasyTimer can_timer_ETC_output(20); // creates a timer that sends at 20Hz
+EasyTimer servo_output_timer(1000);
 
 // initializations for our servo
 Servo etc_servo;
-int etc_servo_pin = 0;
+int etc_servo_pin = A6;
 int etc_servo_lowerb_deg = 0; // degrees
 int etc_servo_upperb_deg = 180; // degrees
-int etc_servo_timeout_safety_factor = 1000; // time in ms before the throttle needs to be shut
+uint etc_servo_timeout_safety_factor = 1000; // time in ms before the throttle needs to be shut
 int etc_servo_desired_throttle = 0;
 int etc_servo_output_angle = 0;
 
@@ -54,12 +55,27 @@ void setup() {
   // Serial bus for arduino debugging
   Serial.begin(9600);
 
+  // led pin
+  pinMode(13, OUTPUT);
+  pinMode(etc_servo_pin, OUTPUT);
+
   // attatch the servo to its pin
-  etc_servo.attach(etc_servo_pin);
+  //etc_servo.attach(etc_servo_pin);
 
   // set the bounds for the user input (found in the CANalyzer GUI)
   USER_throttleRequest.lower_bound = 0;
   USER_throttleRequest.upper_bound = 100;
+
+  // flash the LED twice
+  digitalWrite(13, HIGH);
+  delay(200);
+  digitalWrite(13, LOW);
+  delay(200);
+  digitalWrite(13, HIGH);
+  delay(200);
+  digitalWrite(13, LOW);
+  delay(200);
+
 
 }
 
@@ -75,12 +91,22 @@ void loop() {
   }
 
   // map the desired throttle input (0-100) to the settable range of the servo
-  etc_servo_output_angle = map(etc_servo_desired_throttle,
-                               USER_throttleRequest.lower_bound, USER_throttleRequest.upper_bound,
-                               etc_servo_lowerb_deg, etc_servo_upperb_deg);
+  // etc_servo_output_angle = map(etc_servo_desired_throttle,
+  //                              USER_throttleRequest.lower_bound, USER_throttleRequest.upper_bound,
+  //                              etc_servo_lowerb_deg, etc_servo_upperb_deg);
 
-  // write the angle to the servo
-  etc_servo.write(etc_servo_output_angle);
+
+  delay(2000);
+  digitalWrite(13, HIGH);
+  //etc_servo.write(20);
+  analogWrite(etc_servo_pin, 255);
+  Serial.println("90 Degrees");
+
+  delay(2000);
+  digitalWrite(13, LOW);
+  //etc_servo.write(0);
+  analogWrite(etc_servo_pin, 0);
+  Serial.println("0 Degrees");
 
 
   messages_for_can();
