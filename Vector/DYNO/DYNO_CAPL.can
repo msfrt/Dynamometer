@@ -26,7 +26,7 @@ on timer USER_request_timer
   setTimer(USER_request_timer, USER_request_freq_ms);
   
   USER_request1_msg.USER_rpmRequest = @Vector::USER_rpmRequest;
-  USER_request1_msg.USER_throttleRequest = @Vector::USER_throttleRequest;
+  USER_request1_msg.USER_throttleRequest = @Vector::USER_throttleRequest / USER_request1_msg.USER_throttleRequest.factor;
   USER_request1_msg.USER_wpOverrideStatus = @Vector::USER_wpOverrideStatus;
   USER_request1_msg.USER_wpOverridePercent = @Vector::USER_wpOverridePercent;
   output(USER_request1_msg);
