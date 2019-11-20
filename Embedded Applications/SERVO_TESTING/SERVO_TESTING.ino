@@ -15,11 +15,15 @@ void setup() {
 }
 
 void loop() {
-  myservo.write(0);
-  Serial.println("0");
-  delay(2500);
 
-  myservo.write(90);
-  Serial.println("90");
-  delay(2500);
+  if (Serial.available() > 0) {
+    // read the incoming byte:
+    pos = Serial.parseInt();
+
+    // say what you got:
+    Serial.print("Write: "); Serial.println(pos);
+    myservo.write(pos);
+  }
+
+
 }

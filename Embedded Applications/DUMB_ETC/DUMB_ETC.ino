@@ -38,8 +38,8 @@ EasyTimer servo_output_timer(1000);
 // initializations for our servo
 Servo etc_servo;
 int etc_servo_pin = A6;
-int etc_servo_lowerb_deg = 0; // degrees
-int etc_servo_upperb_deg = 180; // degrees
+int etc_servo_lowerb_deg = 165; // 0% throttle servo pos (verify on throttle if servo other than Hitec HS-5645MG)
+int etc_servo_upperb_deg = 75; // 100% throttle servo pos
 uint etc_servo_timeout_safety_factor = 1000; // time in ms before the throttle needs to be shut
 int etc_servo_desired_throttle = 0;
 int etc_servo_output_angle = 0;
