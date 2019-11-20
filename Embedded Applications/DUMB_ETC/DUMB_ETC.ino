@@ -167,8 +167,8 @@ void read_can()
     switch(rxID){
 
       case 120: // USER_request1
-        USER_throttleRequest.value = rxData[0];
-        USER_rpmRequest.value = rxData[1] + rxData[2] * 256; // opposite order!
+        USER_throttleRequest.value = rxData[0] + rxData[1] * 256;
+        USER_rpmRequest.value = rxData[2] + rxData[3] * 256; // opposite order!
         USER_throttleRequest.last_recieve = millis();
         USER_rpmRequest.last_recieve = millis();
         break; // break USER_request1
