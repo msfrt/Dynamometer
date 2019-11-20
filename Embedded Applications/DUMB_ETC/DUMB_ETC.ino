@@ -90,23 +90,12 @@ void loop() {
     etc_servo_desired_throttle = USER_throttleRequest.value;
   }
 
-  // map the desired throttle input (0-100) to the settable range of the servo
-  // etc_servo_output_angle = map(etc_servo_desired_throttle,
-  //                              USER_throttleRequest.lower_bound, USER_throttleRequest.upper_bound,
-  //                              etc_servo_lowerb_deg, etc_servo_upperb_deg);
+  //map the desired throttle input (0-100) to the settable range of the servo
+  etc_servo_output_angle = map(etc_servo_desired_throttle,
+                               USER_throttleRequest.lower_bound, USER_throttleRequest.upper_bound,
+                               etc_servo_lowerb_deg, etc_servo_upperb_deg);
 
 
-  delay(2000);
-  digitalWrite(13, HIGH);
-  //etc_servo.write(20);
-  analogWrite(etc_servo_pin, 255);
-  Serial.println("90 Degrees");
-
-  delay(2000);
-  digitalWrite(13, LOW);
-  //etc_servo.write(0);
-  analogWrite(etc_servo_pin, 0);
-  Serial.println("0 Degrees");
 
 
   messages_for_can();
