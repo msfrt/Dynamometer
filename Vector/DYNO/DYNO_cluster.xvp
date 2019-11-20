@@ -4,12 +4,12 @@
     <Object Type="Vector.CANalyzer.Panels.Design.GroupBoxControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="GroupBoxControl5" Children="Controls" ControlName="Group Box">
       <Object Type="Vector.CANalyzer.Panels.Design.TrackBarControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="TrackBarControl3" Children="Controls" ControlName="Track Bar">
         <Property Name="Name">TrackBarControl3</Property>
-        <Property Name="Size">278, 24</Property>
+        <Property Name="Size">278, 47</Property>
         <Property Name="Location">8, 22</Property>
-        <Property Name="Maximum">100</Property>
+        <Property Name="Maximum">1000</Property>
         <Property Name="TickFrequency">5</Property>
         <Property Name="TickFrequencyDouble">5</Property>
-        <Property Name="MaximumDouble">100</Property>
+        <Property Name="MaximumDouble">1000</Property>
         <Property Name="SymbolConfiguration">4;16;Vector;;;USER_throttleRequest;2;;;-1</Property>
         <Property Name="TabIndex">0</Property>
       </Object>
