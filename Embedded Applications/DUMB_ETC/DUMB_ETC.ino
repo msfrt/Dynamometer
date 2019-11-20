@@ -41,7 +41,7 @@ int etc_servo_pin = A6;
 int etc_servo_lowerb_deg = 165; // 0% throttle servo pos (verify on throttle if servo other than Hitec HS-5645MG)
 int etc_servo_upperb_deg = 75; // 100% throttle servo pos
 uint etc_servo_timeout_safety_factor = 1000; // time in ms before the throttle needs to be shut
-int etc_servo_desired_throttle = 0;
+double etc_servo_desired_throttle = 0;
 int etc_servo_output_angle = 0;
 
 
@@ -57,10 +57,9 @@ void setup() {
 
   // led pin
   pinMode(13, OUTPUT);
-  pinMode(etc_servo_pin, OUTPUT);
 
   // attatch the servo to its pin
-  //etc_servo.attach(etc_servo_pin);
+  etc_servo.attach(etc_servo_pin);
 
   // set the bounds for the user input (found in the CANalyzer GUI)
   USER_throttleRequest.lower_bound = 0;
@@ -84,18 +83,20 @@ void loop() {
   read_can();
 
   // first we need to check if it's safe to open the throttle
-  if (USER_throttleRequest.last_recieve - millis() >= etc_servo_timeout_safety_factor){
-    etc_servo_desired_throttle = 0; // close it!!!
-  } else {
-    etc_servo_desired_throttle = USER_throttleRequest.value;
-  }
+  // if (USER_throttleRequest.last_recieve - millis() >= etc_servo_timeout_safety_factor){
+  //   etc_servo_desired_throttle = 0; // close it!!!
+  // } else {
+  //   etc_servo_desired_throttle = USER_throttleRequest.value * 0.1;
+  // }
+
+  etc_servo_desired_throttle = USER_throttleRequest.value * 0.1;
 
   //map the desired throttle input (0-100) to the settable range of the servo
   etc_servo_output_angle = map(etc_servo_desired_throttle,
                                USER_throttleRequest.lower_bound, USER_throttleRequest.upper_bound,
                                etc_servo_lowerb_deg, etc_servo_upperb_deg);
 
-
+  etc_servo.write(etc_servo_output_angle);
 
 
   messages_for_can();
@@ -110,9 +111,12 @@ void messages_for_can(){
 
   if (can_timer_ETC_output.check()){
     // ETC_output, ID 121
+    // remove hard code later!
+    etc_servo_desired_throttle *= 10; // change later to remove hard coding!
+    int my_can_var = etc_servo_desired_throttle;
     msg.buf[0] = ETC_status.value;
-    msg.buf[1] = ETC_throttlePosition.value;
-    msg.buf[2] = 0;
+    msg.buf[1] = my_can_var;
+    msg.buf[2] = my_can_var >> 8;
     msg.buf[3] = 0;
     msg.buf[4] = 0;
     msg.buf[5] = 0;
