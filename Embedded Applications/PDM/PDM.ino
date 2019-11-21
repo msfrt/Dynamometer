@@ -1019,8 +1019,8 @@ void CAN_READ()
       // user override msg from PC
       case 120:
       {
-        CAN0_wpOverrideStatus.value = rxData[3];
-        CAN0_wpOverridePercent.value = rxData[5] * 256 + rxData[4];
+        CAN0_wpOverrideStatus.value = rxData[5];
+        CAN0_wpOverridePercent.value = rxData[5] + rxData[6] * 256;
         break;
       }
 
