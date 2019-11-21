@@ -67,31 +67,32 @@ void setup() {
 
   // flash the LED twice
   digitalWrite(13, HIGH);
-  delay(200);
+  delay(100);
   digitalWrite(13, LOW);
-  delay(200);
+  delay(100);
   digitalWrite(13, HIGH);
-  delay(200);
+  delay(100);
   digitalWrite(13, LOW);
-  delay(200);
+  delay(100);
 
 
 }
 
 
 void loop() {
+
   read_can();
 
-  // first we need to check if it's safe to open the throttle
-  // if (USER_throttleRequest.last_recieve - millis() >= etc_servo_timeout_safety_factor){
-  //   etc_servo_desired_throttle = 0; // close it!!!
-  // } else {
-  //   etc_servo_desired_throttle = USER_throttleRequest.value * 0.1;
-  // }
+  first we need to check if it's safe to open the throttle
+  if (USER_throttleRequest.last_recieve - millis() >= etc_servo_timeout_safety_factor){
+    etc_servo_desired_throttle = 0; // close it!!!
+  } else {
+    etc_servo_desired_throttle = USER_throttleRequest.value * 0.1;
+  }
 
   etc_servo_desired_throttle = USER_throttleRequest.value * 0.1;
 
-  //map the desired throttle input (0-100) to the settable range of the servo
+  // map the desired throttle input (0-100) to the settable range of the servo
   etc_servo_output_angle = map(etc_servo_desired_throttle,
                                USER_throttleRequest.lower_bound, USER_throttleRequest.upper_bound,
                                etc_servo_lowerb_deg, etc_servo_upperb_deg);
