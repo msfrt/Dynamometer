@@ -82,7 +82,8 @@ void loop() {
 
   read_can();
 
-  first we need to check if it's safe to open the throttle
+
+  // first we need to check if it's no longer safe to open the throttle
   if (USER_throttleRequest.last_recieve - millis() >= etc_servo_timeout_safety_factor){
     etc_servo_desired_throttle = 0; // close it!!!
   } else {

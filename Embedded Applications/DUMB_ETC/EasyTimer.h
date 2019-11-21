@@ -15,9 +15,9 @@ class EasyTimer{
     void set_delay(int delay); // delay in milliseconds
 
   private:
-    int freq_; // Hz
+    unsigned long freq_; // Hz
     unsigned long last_time_; // for use by timer to hold last time
-    int ms_; // milliseconds
+    unsigned long ms_; // milliseconds
 };
 
 #endif
