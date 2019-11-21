@@ -1,5 +1,3 @@
-//CHECK GITHUB FOR LATEST VERSION
-
 // if CAN is not working make sure that the original FlexCAN is not
 // installed. (Check the onenote for instructions)
 #include <FlexCAN.h>
@@ -42,6 +40,7 @@ int etc_servo_lowerb_deg = 165; // 0% throttle servo pos (verify on throttle if 
 int etc_servo_upperb_deg = 75; // 100% throttle servo pos
 uint etc_servo_timeout_safety_factor = 1000; // time in ms before the throttle needs to be shut
 double etc_servo_desired_throttle = 0;
+int etc_servo_desired_throttle_int = 0; // used for casting to CAN (can't bitshift a double)
 int etc_servo_output_angle = 0;
 
 
@@ -112,14 +111,13 @@ void messages_for_can(){
 
   if (can_timer_ETC_output.check()){
     // ETC_output, ID 121
-    // remove hard code later!
     etc_servo_desired_throttle *= 10; // change later to remove hard coding!
-    int my_can_var = etc_servo_desired_throttle;
+    etc_servo_desired_throttle_int = etc_servo_desired_throttle;
     msg.buf[0] = ETC_status.value;
-    msg.buf[1] = my_can_var;
-    msg.buf[2] = my_can_var >> 8;
-    msg.buf[3] = 0;
-    msg.buf[4] = 0;
+    msg.buf[1] = etc_servo_desired_throttle_int;
+    msg.buf[2] = etc_servo_desired_throttle_int >> 8;
+    msg.buf[3] = etc_servo_output_angle;
+    msg.buf[4] = etc_servo_output_angle >> 8;
     msg.buf[5] = 0;
     msg.buf[6] = 0;
     msg.buf[7] = 0;
