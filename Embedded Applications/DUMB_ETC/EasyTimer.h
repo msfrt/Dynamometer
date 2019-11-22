@@ -11,6 +11,7 @@ class EasyTimer{
   public:
     EasyTimer(int freq); // constructor
     bool check(); // will check the timer to return true if time is up, or false if it is not yet time
+    bool isup(); // same as check()
     void set_frequency(int freq); // frequency in Hz
     void set_delay(int delay); // delay in milliseconds
 

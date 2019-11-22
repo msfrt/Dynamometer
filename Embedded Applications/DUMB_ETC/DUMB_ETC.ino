@@ -44,6 +44,8 @@ int etc_servo_desired_throttle_int = 0; // used for casting to CAN (can't bitshi
 int etc_servo_output_angle = 0;
 
 
+EasyTimer onboard_led_timer(10); // Hz
+bool led_on = false;
 
 
 void setup() {
@@ -64,21 +66,19 @@ void setup() {
   USER_throttleRequest.lower_bound = 0;
   USER_throttleRequest.upper_bound = 100;
 
-  // flash the LED twice
-  digitalWrite(13, HIGH);
-  delay(100);
-  digitalWrite(13, LOW);
-  delay(100);
-  digitalWrite(13, HIGH);
-  delay(100);
-  digitalWrite(13, LOW);
-  delay(100);
-
 
 }
 
 
 void loop() {
+
+  Serial.println(sizeof(USER_throttleRequest.last_recieve));
+
+  // led stuffs
+  if (onboard_led_timer.isup()){
+    if (led_on){led_on = false; digitalWrite(13, LOW);}
+    else { led_on = true; digitalWrite(13, HIGH);}
+  }
 
   read_can();
 
@@ -86,6 +86,7 @@ void loop() {
   // first we need to check if it's no longer safe to open the throttle
   if (USER_throttleRequest.last_recieve - millis() >= etc_servo_timeout_safety_factor){
     etc_servo_desired_throttle = 0; // close it!!!
+    // digitalWrite(13, LOW); //turn the LED off
   } else {
     etc_servo_desired_throttle = USER_throttleRequest.value * 0.1;
   }
@@ -100,6 +101,7 @@ void loop() {
   etc_servo.write(etc_servo_output_angle);
 
 
+
   messages_for_can();
 }
 
@@ -110,7 +112,7 @@ void loop() {
 // this function is simply a place to store the can messages and their respective timers
 void messages_for_can(){
 
-  if (can_timer_ETC_output.check()){
+  if (can_timer_ETC_output.isup()){
     // ETC_output, ID 121
     etc_servo_desired_throttle *= 10; // change later to remove hard coding!
     etc_servo_desired_throttle_int = etc_servo_desired_throttle;
