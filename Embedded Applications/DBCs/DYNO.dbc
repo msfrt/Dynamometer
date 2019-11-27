@@ -43,6 +43,7 @@ BO_ 3221225472 VECTOR__INDEPENDENT_SIG_MSG: 0 Vector__XXX
  SG_ PDM_counter01 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
 
 BO_ 121 ETC_output: 8 Vector__XXX
+ SG_ ETC_servoOutputAngle : 24|16@1- (1,0) [-32768|32767] "" Vector__XXX
  SG_ ETC_status : 0|8@1- (0.1,0) [0|100] "" Vector__XXX
  SG_ ETC_throttlePosition : 8|16@1- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
 
@@ -208,6 +209,7 @@ BO_ 150 PDM_00: 8 PDM
 
 CM_ BU_ PDM "Power Distrubution Module";
 CM_ BO_ 3221225472 "This is a message for not used signals, created by Vector CANdb++ DBC OLE DB Provider.";
+CM_ SG_ 121 ETC_servoOutputAngle "throttle output from the ETC module";
 CM_ SG_ 121 ETC_status "-1= unknown error;
 0 = idle;
 1 = throttle position request;

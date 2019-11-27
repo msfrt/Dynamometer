@@ -72,7 +72,6 @@ void setup() {
 
 void loop() {
 
-  Serial.println(sizeof(USER_throttleRequest.last_recieve));
 
   // led stuffs
   if (onboard_led_timer.isup()){
@@ -91,7 +90,6 @@ void loop() {
     etc_servo_desired_throttle = USER_throttleRequest.value * 0.1;
   }
 
-  etc_servo_desired_throttle = USER_throttleRequest.value * 0.1;
 
   // map the desired throttle input (0-100) to the settable range of the servo
   etc_servo_output_angle = map(etc_servo_desired_throttle,
