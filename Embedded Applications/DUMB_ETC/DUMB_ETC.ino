@@ -37,7 +37,7 @@ EasyTimer servo_output_timer(1000);
 Servo etc_servo;
 int etc_servo_pin = A6;
 int etc_servo_lowerb_deg = 165; // 0% throttle servo pos (verify on throttle if servo other than Hitec HS-5645MG)
-int etc_servo_upperb_deg = 75; // 100% throttle servo pos
+int etc_servo_upperb_deg = 69; // 100% throttle servo pos (right now, servo range is 25-165)
 uint etc_servo_timeout_safety_factor = 1000; // time in ms before the throttle needs to be shut
 double etc_servo_desired_throttle = 0;
 int etc_servo_desired_throttle_int = 0; // used for casting to CAN (can't bitshift a double)
@@ -82,13 +82,15 @@ void loop() {
   read_can();
 
 
-  // first we need to check if it's no longer safe to open the throttle
-  if (USER_throttleRequest.last_recieve - millis() >= etc_servo_timeout_safety_factor){
-    etc_servo_desired_throttle = 0; // close it!!!
-    // digitalWrite(13, LOW); //turn the LED off
-  } else {
-    etc_servo_desired_throttle = USER_throttleRequest.value * 0.1;
-  }
+  // // first we need to check if it's no longer safe to open the throttle
+  // if (USER_throttleRequest.last_recieve - millis() >= etc_servo_timeout_safety_factor){
+  //   etc_servo_desired_throttle = 0; // close it!!!
+  //   digitalWrite(13, LOW); //turn the LED off
+  // } else {
+  //   etc_servo_desired_throttle = USER_throttleRequest.value * 0.1;
+  // }
+
+  etc_servo_desired_throttle = USER_throttleRequest.value * 0.1;
 
 
   // map the desired throttle input (0-100) to the settable range of the servo

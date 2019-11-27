@@ -126,17 +126,6 @@
       <Property Name="TabIndex">24</Property>
     </Object>
     <Object Type="Vector.CANalyzer.Panels.Design.GroupBoxControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="GroupBoxControl2" Children="Controls" ControlName="Group Box 2">
-      <Object Type="Vector.CANalyzer.Panels.Design.CheckBoxControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="CheckBoxControl1" Children="Controls" ControlName="Check Box">
-        <Property Name="Name">CheckBoxControl1</Property>
-        <Property Name="Size">43, 46</Property>
-        <Property Name="Location">66, 321</Property>
-        <Property Name="TextAlign">BottomCenter</Property>
-        <Property Name="CheckAlign">MiddleCenter</Property>
-        <Property Name="Text">WOT</Property>
-        <Property Name="CheckValue">100</Property>
-        <Property Name="SymbolConfiguration">4;16;Vector;;;USER_throttleRequest;2;;;-1</Property>
-        <Property Name="TabIndex">10</Property>
-      </Object>
       <Object Type="Vector.CANalyzer.Panels.Design.StaticTextControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="StaticTextControl5" Children="Controls" ControlName="Static Text">
         <Property Name="Name">StaticTextControl5</Property>
         <Property Name="Size">50, 26</Property>
