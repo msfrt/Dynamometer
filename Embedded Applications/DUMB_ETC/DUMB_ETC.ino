@@ -7,7 +7,7 @@
 #include <Servo.h>
 
 // include the custom timer library
-#include "EasyTimer.h"
+#include <EasyTimer.h>
 
 // define message type - do not change these names
 static CAN_message_t msg; // this is the outgoing message buffer
