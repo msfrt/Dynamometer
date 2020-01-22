@@ -126,6 +126,28 @@
       <Property Name="TabIndex">24</Property>
     </Object>
     <Object Type="Vector.CANalyzer.Panels.Design.GroupBoxControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="GroupBoxControl2" Children="Controls" ControlName="Group Box 2">
+      <Object Type="Vector.CANalyzer.Panels.Design.StaticTextControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="StaticTextControl8" Children="Controls" ControlName="Static Text">
+        <Property Name="Name">StaticTextControl8</Property>
+        <Property Name="Size">62, 26</Property>
+        <Property Name="Location">578, 354</Property>
+        <Property Name="TextAlign">MiddleCenter</Property>
+        <Property Name="Text">Water
+Pump PWM</Property>
+      </Object>
+      <Object Type="Vector.CANalyzer.Panels.Design.ProgressBarControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="ProgressBarControl7" Children="Controls" ControlName="Progress Bar">
+        <Property Name="Name">ProgressBarControl7</Property>
+        <Property Name="Size">50, 323</Property>
+        <Property Name="Location">584, 23</Property>
+        <Property Name="OriginValue">0</Property>
+        <Property Name="Alignment">RightBottom</Property>
+        <Property Name="Maximum">255</Property>
+        <Property Name="Orientation">Vertical</Property>
+        <Property Name="ValuePos">Top</Property>
+        <Property Name="UseWindowsStyle">False</Property>
+        <Property Name="DecimalPlaces">1</Property>
+        <Property Name="ValueSize">50, 13</Property>
+        <Property Name="SymbolConfiguration">4;2;DYNO;PDM;PDM_13;PDM_wpPWM;1;CAN1;;-1</Property>
+      </Object>
       <Object Type="Vector.CANalyzer.Panels.Design.StaticTextControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="StaticTextControl5" Children="Controls" ControlName="Static Text">
         <Property Name="Name">StaticTextControl5</Property>
         <Property Name="Size">50, 26</Property>
@@ -241,7 +263,7 @@ Pressure</Property>
         <Property Name="SymbolConfiguration">4;2;DYNO;M400;M400_dataSet1;M400_oilPressure;1;CAN1;;-1</Property>
       </Object>
       <Property Name="Name">GroupBoxControl2</Property>
-      <Property Name="Size">593, 401</Property>
+      <Property Name="Size">661, 401</Property>
       <Property Name="Location">406, 3</Property>
       <Property Name="Text">Engine Vitals</Property>
       <Property Name="TabIndex">20</Property>
