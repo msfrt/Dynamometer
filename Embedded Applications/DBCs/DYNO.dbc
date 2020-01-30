@@ -67,7 +67,7 @@ BO_ 1519 M400_dataSet2: 8 M400
  SG_ M400_ignComp2 m15 : 55|16@0- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
  SG_ M400_ignComp1 m15 : 39|16@0- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
  SG_ M400_ignATComp m15 : 23|16@0- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
- SG_ M400_fuelUsed m14 : 55|16@0- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ M400_fuelUsed m14 : 55|16@0- (0.01,0) [0|0] "" Vector__XXX
  SG_ M400_fuelTemp m14 : 39|16@0- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
  SG_ M400_fuelStartingComp m14 : 23|16@0- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
  SG_ M400_fuelPressure m13 : 55|16@0- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
@@ -81,12 +81,12 @@ BO_ 1519 M400_dataSet2: 8 M400
  SG_ M400_fuelETComp m11 : 23|16@0- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
  SG_ M400_fuelDecelClamp m10 : 55|16@0- (1,0) [-32768|32767] "" Vector__XXX
  SG_ M400_fuelDecel m10 : 39|16@0- (1,0) [-32768|32767] "" Vector__XXX
- SG_ M400_fuelComp2 m10 : 23|16@0- (1,0) [-32768|32767] "" Vector__XXX
- SG_ M400_fuelComp1 m9 : 55|16@0- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ M400_fuelComp2 m10 : 23|16@0- (0.1,0) [0|0] "" Vector__XXX
+ SG_ M400_fuelComp1 m9 : 55|16@0- (0.1,0) [0|0] "" Vector__XXX
  SG_ M400_fuelBasePulseW m9 : 39|16@0- (0.002,0) [-65.536|65.534] "" Vector__XXX
  SG_ M400_fuelATComp m9 : 23|16@0- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
  SG_ M400_fuelActualPulseW m8 : 55|16@0- (0.002,0) [0|0] "" Vector__XXX
- SG_ M400_fuelAccelClamp m8 : 39|16@0- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ M400_fuelAccelClamp m8 : 39|16@0- (0.002,0) [0|0] "" Vector__XXX
  SG_ M400_fuelAccel m8 : 23|16@0- (1,0) [-32768|32767] "" Vector__XXX
  SG_ M400_fuel4PulseWidth m7 : 55|16@0- (0.002,0) [0|0] "" Vector__XXX
  SG_ M400_fuel4IndivTrim m7 : 39|16@0- (1,0) [-32768|32767] "" Vector__XXX
@@ -122,28 +122,28 @@ BO_ 1520 M400_dataSet1: 8 M400
  SG_ M400_la1ShortTermTrim m8 : 39|16@0- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
  SG_ M400_la1AimValue m8 : 23|16@0- (0.001,0) [-32.768|32.767] "" Vector__XXX
  SG_ M400_knock1 m7 : 55|16@0- (1,0) [-32768|32767] "" Vector__XXX
- SG_ M400_ignOverallTrim m6 : 23|16@0- (1,0) [-32768|32767] "" Vector__XXX
- SG_ M400_ignDwellTime m7 : 39|16@0- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ M400_ignOverallTrim m6 : 23|16@0- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
+ SG_ M400_ignDwellTime m7 : 39|16@0- (0.002,0) [-65.536|65.534] "" Vector__XXX
  SG_ M400_ignDecel m7 : 23|16@0- (1,0) [-32768|32767] "" Vector__XXX
  SG_ M400_ignCutLevelTotal m5 : 55|16@0- (1,0) [-32768|32767] "" Vector__XXX
  SG_ M400_ignBaseAdvance m5 : 39|16@0- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
  SG_ M400_ignAdvance m6 : 55|16@0- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
  SG_ M400_ignAccel m6 : 39|16@0- (1,0) [-32768|32767] "" Vector__XXX
- SG_ M400_ign4IndivTrim m5 : 23|16@0- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ M400_ign4IndivTrim m5 : 23|16@0- (0.2,0) [-6553.6|6553.4] "" Vector__XXX
  SG_ M400_ign4Advance m4 : 55|16@0- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
- SG_ M400_ign3IndivTrim m4 : 39|16@0- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ M400_ign3IndivTrim m4 : 39|16@0- (0.2,0) [-6553.6|6553.4] "" Vector__XXX
  SG_ M400_ign3Advance m4 : 23|16@0- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
- SG_ M400_ign2IndivTrim m3 : 55|16@0- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ M400_ign2IndivTrim m3 : 55|16@0- (0.2,0) [-6553.6|6553.4] "" Vector__XXX
  SG_ M400_ign2Advance m3 : 39|16@0- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
- SG_ M400_ign1IndivTrim m3 : 23|16@0- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ M400_ign1IndivTrim m3 : 23|16@0- (0.2,0) [-6553.6|6553.4] "" Vector__XXX
  SG_ M400_ign1Advance m2 : 55|16@0- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
  SG_ M400_gearSensorVoltage m2 : 39|16@0- (0.001,0) [-32.768|32.767] "" Vector__XXX
  SG_ M400_gearDet m2 : 23|16@0- (1,0) [-32768|32767] "" Vector__XXX
  SG_ M400_gear m1 : 55|16@0- (1,0) [-32768|32767] "" Vector__XXX
  SG_ M400_fuelOverallTrim m1 : 39|16@0- (0.1,0) [0|0] "" Vector__XXX
- SG_ M400_fuelInjTimingSec m1 : 23|16@0- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ M400_fuelInjTimingSec m1 : 23|16@0- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
  SG_ M400_fuelInjTimingComp m0 : 55|16@0- (1,0) [-32768|32767] "" Vector__XXX
- SG_ M400_fuelInjTiming m0 : 39|16@0- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ M400_fuelInjTiming m0 : 39|16@0- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
  SG_ M400_fuelCutLevelTotal m0 : 23|16@0- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
  SG_ M400_rowCounterDataSet1 M : 0|8@1+ (1,0) [0|255] "" Vector__XXX
 
