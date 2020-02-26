@@ -93,9 +93,10 @@ void loop() {
     } else {
       etc_pid_setpoint = 0;
     }
-    
+
     etc_pid_input_signal = M400_throttlePosition.value();
     etc_pid.Compute();
+    etc_servo.write(etc_servo_current);
   }
 
   // send it!
