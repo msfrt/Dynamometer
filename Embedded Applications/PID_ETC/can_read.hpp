@@ -34,6 +34,12 @@ void read_USER_request1(CAN_message_t &imsg){
   USER_throttleRequest.set_can_value(imsg.buf[0] | imsg.buf[1] << 8);
 }
 
+void read_USER_request2(CAN_message_t &imsg){
+  USER_throttleKp.set_can_value(imsg.buf[0] | imsg.buf[1] << 8);
+  USER_throttleKi.set_can_value(imsg.buf[2] | imsg.buf[3] << 8);
+  USER_throttleKd.set_can_value(imsg.buf[4] | imsg.buf[5] << 8);
+}
+
 
 
 // function that reads the msg and then directs that data elsewhere
@@ -49,6 +55,9 @@ void read_can1(){
         break;
       case 120:
         read_USER_request1(rxmsg);
+        break;
+      case 128:
+        read_USER_request2(rxmsg);
         break;
     } // end switch statement
 

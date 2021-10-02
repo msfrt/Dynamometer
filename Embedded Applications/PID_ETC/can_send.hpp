@@ -14,11 +14,11 @@ void send_ETC_10(){
 
   // load up the message buffer
   msg.buf[0] = ctr.value();
-  msg.buf[1] = 0;
-  msg.buf[2] = 0;
-  msg.buf[3] = 0;
-  msg.buf[4] = ETC_servoOutputAngle.can_value();
-  msg.buf[5] = ETC_servoOutputAngle.can_value() >> 8;
+  msg.buf[1] = ETC_throttlePosition.can_value();
+  msg.buf[2] = ETC_throttlePosition.can_value() >> 8;
+  msg.buf[3] = ETC_servoOutputAngle.can_value();
+  msg.buf[4] = ETC_servoOutputAngle.can_value() >> 8;
+  msg.buf[5] = 0;
   msg.buf[6] = 0;
   msg.buf[7] = 0;
 
