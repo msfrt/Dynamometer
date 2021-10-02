@@ -25,7 +25,7 @@
         <Property Name="DescriptionText">USER_throttleKd:</Property>
         <Property Name="AlarmLowerFont">Microsoft Sans Serif, 7.875pt</Property>
         <Property Name="DescriptionSize">89, 16</Property>
-        <Property Name="SymbolConfiguration">4;2;DYNO;;USER_request2;USER_throttleKd;1;CAN1;;-1</Property>
+        <Property Name="SymbolConfiguration">4;16;Vector;;;USER_throttleKd;2;;;-1</Property>
         <Property Name="TabIndex">2</Property>
       </Object>
       <Object Type="Vector.CANalyzer.Panels.Design.TextBoxControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="TextBoxControl2" Children="Controls" ControlName="Input/Output Box">
@@ -43,7 +43,7 @@
         <Property Name="DescriptionText">USER_throttleKi:</Property>
         <Property Name="AlarmLowerFont">Microsoft Sans Serif, 7.875pt</Property>
         <Property Name="DescriptionSize">86, 16</Property>
-        <Property Name="SymbolConfiguration">4;2;DYNO;;USER_request2;USER_throttleKi;1;CAN1;;-1</Property>
+        <Property Name="SymbolConfiguration">4;16;Vector;;;USER_throttleKi;2;;;-1</Property>
         <Property Name="TabIndex">1</Property>
       </Object>
       <Object Type="Vector.CANalyzer.Panels.Design.TextBoxControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="TextBoxControl1" Children="Controls" ControlName="Input/Output Box">
@@ -61,7 +61,7 @@
         <Property Name="DescriptionText">USER_throttleKp:</Property>
         <Property Name="AlarmLowerFont">Microsoft Sans Serif, 7.875pt</Property>
         <Property Name="DescriptionSize">89, 16</Property>
-        <Property Name="SymbolConfiguration">4;2;DYNO;;USER_request2;USER_throttleKp;1;CAN1;;-1</Property>
+        <Property Name="SymbolConfiguration">4;16;Vector;;;USER_throttleKp;2;;;-1</Property>
         <Property Name="TabIndex">0</Property>
       </Object>
       <Property Name="Name">GroupBoxControl6</Property>

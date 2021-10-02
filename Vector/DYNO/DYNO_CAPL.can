@@ -36,6 +36,9 @@ on timer USER_request_timer
 
 on sysvar_update Vector::USER_updatePID
 {
+  USER_request2_msg.USER_throttleKp = @Vector::USER_throttleKp;
+  USER_request2_msg.USER_throttleKi = @Vector::USER_throttleKi;
+  USER_request2_msg.USER_throttleKd = @Vector::USER_throttleKd;
   output(USER_request2_msg);
 }
 
