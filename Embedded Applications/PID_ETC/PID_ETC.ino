@@ -11,10 +11,26 @@
 FlexCAN_T4<CAN0, RX_SIZE_256, TX_SIZE_16> cbus1;
 
 
+#include <PID_v1.h>
+//Define Variables we'll be connecting to
+double throttle_setpoint, throttle_input, throttle_output;
+ 
+//Specify the links and initial tuning parameters
+double Kp=1, Ki=0, Kd=0; // default values
+PID throttle_PID(&throttle_input, &throttle_output, &throttle_setpoint, Kp, Ki, Kd, DIRECT);
+
+// minimum and maximum allowable values for the M400 throttle sensor (i.e. idle and WOT)
+double throttle_pos_min = 5.0, throttle_pos_max=100.0;
+
+
 #include <StateCAN.h>
 // StateSignal MOD_sigName(bitl, signed, inv_factor, offset, min, max, secondary_val, timeout);
 StateSignal USER_throttleRequest(16, true, 10, 0, 0, 100, 0, 1000); // rx
-StateSignal M400_throttlePosition(16, true, 10, 0, 0, 100, 0, 1000); // rx
+StateSignal USER_throttleKp(16, true, 10, 0, 0, 100, 0, 1000); // rx
+StateSignal USER_throttleKi(16, true, 100, 0, 0, 100, 0, 1000); // rx
+StateSignal USER_throttleKd(16, true, 100, 0, 0, 100, 0, 1000); // rx
+StateSignal M400_throttlePosition(16, true, 100, 0, 0, 100, 0, 1000); // rx
+StateSignal ETC_throttlePosition(16, true, 10, 0, 0, 100, 0, 1000); // tx
 StateSignal ETC_servoOutputAngle(16, true, 1, 0, 0, 100, 0, 1000); // tx
 
 // rate to check for timeouts -- should be faster than the minimum timout duration for any CAN signal
@@ -27,10 +43,10 @@ EasyTimer timeout_check_timer(10); // 10Hz
 // initializations for our servo
 Servo etc_servo;
 int etc_servo_pin = A6;
-int etc_servo_lowerb_deg = 165; // 0% throttle servo pos (verify on throttle if servo other than Hitec HS-5645MG)
-int etc_servo_upperb_deg = 69; // 100% throttle servo pos (right now, servo range is 25-165)
+int etc_servo_lowerb_deg = 154; // 0% throttle servo pos (verify on throttle if servo other than Hitec HS-5645MG)
+int etc_servo_upperb_deg = 55; // 100% throttle servo pos (right now, servo range is 25-165)
 int etc_servo_increment = 1; // number of servo degrees to
-double etc_servo_current = 0; // current position
+int etc_servo_current = 0; // current position
 float etc_servo_degrees_dif_accepted = 0.5; // will stop moving the servo when within 'X' degrees of desired position
 EasyTimer etc_servo_update_timer(15); // rate at which to update the servo
 
@@ -39,13 +55,7 @@ EasyTimer etc_servo_update_timer(15); // rate at which to update the servo
 LEDBlink onboard_led(13, 10); // onboard led, pin13, blink at 10hz
 
 
-// PID controller for ETC.
-int Kp = 1;
-int Ki = 1;
-int Kd = 1;
-double etc_pid_input_signal = 0;
-double pid_setpoint = 0;
-PID etc_pid(&etc_pid_input_signal, &etc_servo_current, &etc_pid_setpoint, Kp, Ki, Kd, REVERSE);
+
 
 
 void setup() {
@@ -66,6 +76,13 @@ void setup() {
   // sweep the servo with <param>ms between increments/decrements
   servo_sweeper(25);
 
+  //turn the PID on
+  throttle_PID.SetMode(AUTOMATIC);
+  USER_throttleKp = Kp;
+  USER_throttleKi = Ki;
+  USER_throttleKd = Kd;
+  throttle_PID.SetOutputLimits(throttle_pos_min, throttle_pos_max);
+
 }
 
 
@@ -76,6 +93,8 @@ void loop() {
 
   // read the can bus every clock cycle
   read_can1();
+  throttle_setpoint = USER_throttleRequest.value();
+  throttle_input = M400_throttlePosition.value();
 
 
   // check to see if the signals we want are still time-valid
@@ -84,26 +103,31 @@ void loop() {
     M400_throttlePosition.timeout_check();
   }
 
-  // update the input and setpoint signals, then compute
-  if (etc_servo_update_timer.isup()){
+  // see if we need to update PID values
+  //if (USER_throttleKp.value() )
 
-    // close the throttle if timed out
-    if (USER_throttleRequest.is_valid() && M400_throttlePosition.is_valid()){
-      etc_pid_setpoint = USER_throttleRequest.value();
-    } else {
-      etc_pid_setpoint = 0;
-    }
 
-    etc_pid_input_signal = M400_throttlePosition.value();
-    etc_pid.Compute();
-    etc_servo.write(etc_servo_current);
-  }
+  throttle_PID.Compute();
+
+  // map the desired output angle to the top and bottom servo bounds
+  etc_servo_current = float_map(throttle_output, throttle_pos_min, throttle_pos_max, etc_servo_lowerb_deg, etc_servo_upperb_deg);
+  ETC_throttlePosition = throttle_output;
+  ETC_servoOutputAngle = etc_servo_current;
+
+  etc_servo.write(etc_servo_current);
+  Serial.println();
+  Serial.println(ETC_throttlePosition.value());
+  Serial.println(ETC_servoOutputAngle.value());
 
   // send it!
   send_can1();
 }
 
 
+
+float float_map(float x, float in_min, float in_max, float out_min, float out_max) {
+  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
 
 
 // sweeps the servo between it's lower and upper bounds, then ends in the middle of the two
