@@ -1,0 +1,79 @@
+VERSION "HIPBNYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY/4/%%%/4/'%**4YYY///"
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_:
+
+
+BO_ 2566840064 Config: 8 Vector__XXX
+ SG_ Mode : 7|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Data1 : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Data2 : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Data3 : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Data4 : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Data5 : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Data6 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ HeaterCtrl : 63|8@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 1120 Sensor1: 8 Vector__XXX
+ SG_ sw_ver1 m1 : 63|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ StatB71 m1 : 55|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ StatB61 m1 : 47|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ StatB51 m1 : 39|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ StatB41 m1 : 31|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ StatB31 m1 : 23|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ LSUState1 m1 : 15|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Fault1 m0 : 55|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ PumpCurrent1 m0 : 31|16@0+ (1,32753) [0|0] "A" Vector__XXX
+ SG_ Lambda1 m0 : 15|16@0+ (0.001,0) [0|0] "" Vector__XXX
+ SG_ HeaterPWM1 m0 : 63|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Mux1 M : 7|8@0+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 1121 Sensor2: 8 Vector__XXX
+ SG_ sw_ver2 m1 : 63|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Fault2 m0 : 55|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ StatB72 m1 : 55|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ StatB62 m1 : 47|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ StatB52 m1 : 39|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ StatB42 m1 : 31|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ StatB32 m1 : 23|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ PumpCurrent2 m0 : 31|16@0- (6E-006,0) [0|0] "A" Vector__XXX
+ SG_ LSUState2 m1 : 15|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Lambda2 m0 : 15|16@0+ (0.001,0) [0|0] "" Vector__XXX
+ SG_ HeaterPWM2 m0 : 63|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Mux2 M : 7|8@0+ (1,0) [0|0] "" Vector__XXX
+
+
+
+
