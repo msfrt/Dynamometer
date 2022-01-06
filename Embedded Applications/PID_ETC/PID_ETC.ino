@@ -18,8 +18,8 @@ float throttle_input = 50;
 float servo_output = 150;
  
 //Specify the links and initial tuning parameters
-float Kp=-1, Ki=0, Kd=0; // default values
-QuickPID throttle_PID(&throttle_input, &servo_output, &throttle_setpoint);
+float Kp=1, Ki=0, Kd=0; // default values
+QuickPID throttle_PID(&throttle_input, &servo_output, &throttle_setpoint, Kp, Ki, Kd, throttle_PID.Action::reverse);
 
 // minimum and maximum allowable values for the M400 throttle sensor (i.e. idle and WOT)
 double throttle_pos_min = 10.0, throttle_pos_max=100.0;
@@ -72,8 +72,6 @@ void setup() {
   // sweep the servo with <param>ms between increments/decrements
   servo_sweeper(25);
 
-  //apply PID gains
-  throttle_PID.SetTunings(Kp, Ki, Kd);
 
   //turn the PID on
   throttle_PID.SetMode(throttle_PID.Control::automatic);
