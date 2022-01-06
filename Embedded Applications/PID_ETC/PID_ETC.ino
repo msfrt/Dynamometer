@@ -23,21 +23,15 @@ PID throttle_PID(&throttle_input, &throttle_output, &throttle_setpoint, Kp, Ki, 
 double throttle_pos_min = 5.0, throttle_pos_max=100.0;
 
 
-#include <StateCAN.h>
-// StateSignal MOD_sigName(bitl, signed, inv_factor, offset, min, max, secondary_val, timeout);
-StateSignal USER_throttleRequest(16, true, 10, 0, 0, 100, 0, 1000); // rx
-StateSignal USER_throttleKp(16, true, 10, 0, 0, 100, 0, 1000); // rx
-StateSignal USER_throttleKi(16, true, 100, 0, 0, 100, 0, 1000); // rx
-StateSignal USER_throttleKd(16, true, 100, 0, 0, 100, 0, 1000); // rx
-StateSignal M400_throttlePosition(16, true, 100, 0, 0, 100, 0, 1000); // rx
-StateSignal ETC_throttlePosition(16, true, 10, 0, 0, 100, 0, 1000); // tx
-StateSignal ETC_servoOutputAngle(16, true, 1, 0, 0, 100, 0, 1000); // tx
+
 
 // rate to check for timeouts -- should be faster than the minimum timout duration for any CAN signal
 EasyTimer timeout_check_timer(10); // 10Hz
 
+#include <StateCAN.h>
+#include "CAN1.hpp"  // can reading definitions
 #include "can_send.hpp"
-#include "can_read.hpp"
+static CAN_message_t rxmsg;
 
 
 // initializations for our servo
@@ -92,7 +86,10 @@ void loop() {
   onboard_led.run();
 
   // read the can bus every clock cycle
-  read_can1();
+  if (cbus1.read(rxmsg)){
+    decode_DYNO(rxmsg);
+  }
+
   throttle_setpoint = USER_throttleRequest.value();
   throttle_input = M400_throttlePosition.value();
 
@@ -112,12 +109,12 @@ void loop() {
   // map the desired output angle to the top and bottom servo bounds
   etc_servo_current = float_map(throttle_output, throttle_pos_min, throttle_pos_max, etc_servo_lowerb_deg, etc_servo_upperb_deg);
   ETC_throttlePosition = throttle_output;
-  ETC_servoOutputAngle = etc_servo_current;
+  ETC_servoOutput = etc_servo_current;
 
   etc_servo.write(etc_servo_current);
   Serial.println();
   Serial.println(ETC_throttlePosition.value());
-  Serial.println(ETC_servoOutputAngle.value());
+  Serial.println(ETC_servoOutput.value());
 
   // send it!
   send_can1();
