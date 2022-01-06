@@ -11,16 +11,18 @@
 FlexCAN_T4<CAN0, RX_SIZE_256, TX_SIZE_16> cbus1;
 
 
-#include <PID_v1.h>
+#include <QuickPID.h>
 //Define Variables we'll be connecting to
-double throttle_setpoint, throttle_input, throttle_output;
+float throttle_setpoint = 50;
+float throttle_input = 50;
+float servo_output = 150;
  
 //Specify the links and initial tuning parameters
-double Kp=1, Ki=0, Kd=0; // default values
-PID throttle_PID(&throttle_input, &throttle_output, &throttle_setpoint, Kp, Ki, Kd, DIRECT);
+float Kp=-1, Ki=0, Kd=0; // default values
+QuickPID throttle_PID(&throttle_input, &servo_output, &throttle_setpoint);
 
 // minimum and maximum allowable values for the M400 throttle sensor (i.e. idle and WOT)
-double throttle_pos_min = 5.0, throttle_pos_max=100.0;
+double throttle_pos_min = 10.0, throttle_pos_max=100.0;
 
 
 
@@ -37,8 +39,8 @@ static CAN_message_t rxmsg;
 // initializations for our servo
 Servo etc_servo;
 int etc_servo_pin = A6;
-int etc_servo_lowerb_deg = 154; // 0% throttle servo pos (verify on throttle if servo other than Hitec HS-5645MG)
-int etc_servo_upperb_deg = 55; // 100% throttle servo pos (right now, servo range is 25-165)
+int etc_servo_lowerb_pwm = 154; // 0% throttle servo pos (verify on throttle if servo other than Hitec HS-5645MG)
+int etc_servo_upperb_pwm = 55; // 100% throttle servo pos (right now, servo range is 25-165)
 int etc_servo_increment = 1; // number of servo degrees to
 int etc_servo_current = 0; // current position
 float etc_servo_degrees_dif_accepted = 0.5; // will stop moving the servo when within 'X' degrees of desired position
@@ -70,12 +72,15 @@ void setup() {
   // sweep the servo with <param>ms between increments/decrements
   servo_sweeper(25);
 
+  //apply PID gains
+  throttle_PID.SetTunings(Kp, Ki, Kd);
+
   //turn the PID on
-  throttle_PID.SetMode(AUTOMATIC);
+  throttle_PID.SetMode(throttle_PID.Control::automatic);
   USER_throttleKp = Kp;
   USER_throttleKi = Ki;
   USER_throttleKd = Kd;
-  throttle_PID.SetOutputLimits(throttle_pos_min, throttle_pos_max);
+  throttle_PID.SetOutputLimits(etc_servo_lowerb_pwm, etc_servo_upperb_pwm);
 
 }
 
@@ -90,15 +95,27 @@ void loop() {
     decode_DYNO(rxmsg);
   }
 
-  throttle_setpoint = USER_throttleRequest.value();
-  throttle_input = M400_throttlePosition.value();
+  if (USER_throttleRequest.is_updated()){
+    throttle_setpoint = USER_throttleRequest.value();
+  }
+
+  if (M400_throttlePosition.is_updated()){
+    throttle_input = M400_throttlePosition.value();
+  }
+  
+  // be sure that the request is within allowable bounds:
+  if (throttle_setpoint < throttle_pos_min){
+    throttle_setpoint = throttle_pos_min;
+  } else if (throttle_setpoint > throttle_pos_max){
+    throttle_setpoint = throttle_pos_max;
+  }
 
 
   // check to see if the signals we want are still time-valid
-  if (timeout_check_timer.isup()){
-    USER_throttleRequest.timeout_check();
-    M400_throttlePosition.timeout_check();
-  }
+  // if (timeout_check_timer.isup()){
+  //   USER_throttleRequest.timeout_check();
+  //   M400_throttlePosition.timeout_check();
+  // }
 
   // see if we need to update PID values
   //if (USER_throttleKp.value() )
@@ -106,15 +123,18 @@ void loop() {
 
   throttle_PID.Compute();
 
-  // map the desired output angle to the top and bottom servo bounds
-  etc_servo_current = float_map(throttle_output, throttle_pos_min, throttle_pos_max, etc_servo_lowerb_deg, etc_servo_upperb_deg);
-  ETC_throttlePosition = throttle_output;
-  ETC_servoOutput = etc_servo_current;
 
-  etc_servo.write(etc_servo_current);
+  // update the CAN values that we send
+  ETC_throttlePosition = throttle_setpoint;
+  ETC_servoOutput = servo_output;
+
+
+
+  etc_servo.write(servo_output);
   Serial.println();
-  Serial.println(ETC_throttlePosition.value());
-  Serial.println(ETC_servoOutput.value());
+  Serial.print("M400 Throttle %:  "); Serial.println(M400_throttlePosition.value());
+  Serial.print("ETC Throttle %:   "); Serial.println(ETC_throttlePosition.value());
+  Serial.print("ETC Throttle PWM: "); Serial.println(ETC_servoOutput.value());
 
   // send it!
   send_can1();
@@ -135,12 +155,12 @@ void servo_sweeper(int delayms){
   int mid = 0;
 
   // assign the easily-incrementable boundaries
-  if (etc_servo_lowerb_deg < etc_servo_upperb_deg){
-    lower = etc_servo_lowerb_deg;
-    upper = etc_servo_upperb_deg;
+  if (etc_servo_lowerb_pwm < etc_servo_upperb_pwm){
+    lower = etc_servo_lowerb_pwm;
+    upper = etc_servo_upperb_pwm;
   } else {
-    upper = etc_servo_lowerb_deg;
-    lower = etc_servo_upperb_deg;
+    upper = etc_servo_lowerb_pwm;
+    lower = etc_servo_upperb_pwm;
   }
 
   etc_servo_current = lower;
