@@ -12,7 +12,7 @@ FlexCAN_T4<CAN0, RX_SIZE_256, TX_SIZE_16> cbus1;
 
 
 // minimum and maximum allowable values for the M400 throttle sensor (i.e. idle and WOT)
-double throttle_pos_min = 10.0, throttle_pos_max=100.0;
+double throttle_pos_min = 5.0, throttle_pos_max=100.0;
 
 
 // rate to check for timeouts -- should be faster than the minimum timout duration for any CAN signal
@@ -32,7 +32,7 @@ int etc_servo_upperb_pwm = 55; // 100% throttle servo pos (right now, servo rang
 int etc_servo_increment = 1; // number of servo degrees to
 int etc_servo_current = 0; // current position
 float etc_servo_degrees_dif_accepted = 0.5; // will stop moving the servo when within 'X' degrees of desired position
-EasyTimer etc_servo_update_timer(15); // rate at which to update the servo
+EasyTimer etc_servo_update_timer(10); // rate at which to update the servo
 
 
 // the good stuff
@@ -67,8 +67,6 @@ void setup() {
   // sweep the servo with <param>ms between increments/decrements
   servo_sweeper(25);
 
-  EasyTimer debug(10);
-
 
 }
 
@@ -83,28 +81,29 @@ void loop() {
     decode_DYNO(rxmsg);
   }
 
-
   
   // be sure that the request is within allowable bounds:
   if (USER_throttleRequest.value() < throttle_pos_min){
     ETC_throttlePosition = throttle_pos_min;
   } else if (USER_throttleRequest.value() > throttle_pos_max){
     ETC_throttlePosition = throttle_pos_max;
+  } else {
+    ETC_throttlePosition = USER_throttleRequest.value();
   }
 
 
   // check to see if the signals we want are still time-valid
-  if (timeout_check_timer.isup()){
-    USER_throttleRequest.timeout_check();
-    M400_throttlePosition.timeout_check();
-  }
+  // if (timeout_check_timer.isup()){
+  //   USER_throttleRequest.timeout_check();
+  //   M400_throttlePosition.timeout_check();
+  // }
 
   // update the servo----------------------------------------------------------
 
   if (etc_servo_update_timer.isup()){
 
     // calculate the delta 
-    int error = ETC_throttlePosition.value() - M400_throttlePosition.value();
+    int error = M400_throttlePosition.value() - ETC_throttlePosition.value();
 
     // if the error is MORE than the allowable amount, we need to update the servo
     if (abs(error) > etc_servo_degrees_dif_accepted){
@@ -133,6 +132,7 @@ void loop() {
 
     // update the servo
     etc_servo.write(etc_servo_current);
+    ETC_servoOutput = etc_servo_current;  // update value for CAN here
 
   }
 
