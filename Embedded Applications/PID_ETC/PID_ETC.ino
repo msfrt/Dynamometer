@@ -11,20 +11,8 @@
 FlexCAN_T4<CAN0, RX_SIZE_256, TX_SIZE_16> cbus1;
 
 
-#include <QuickPID.h>
-//Define Variables we'll be connecting to
-float throttle_setpoint = 50;
-float throttle_input = 50;
-float servo_output = 150;
- 
-//Specify the links and initial tuning parameters
-float Kp=1, Ki=0, Kd=0; // default values
-QuickPID throttle_PID(&throttle_input, &servo_output, &throttle_setpoint, Kp, Ki, Kd, throttle_PID.Action::reverse);
-
 // minimum and maximum allowable values for the M400 throttle sensor (i.e. idle and WOT)
 double throttle_pos_min = 10.0, throttle_pos_max=100.0;
-
-
 
 
 // rate to check for timeouts -- should be faster than the minimum timout duration for any CAN signal
@@ -51,10 +39,17 @@ EasyTimer etc_servo_update_timer(15); // rate at which to update the servo
 LEDBlink onboard_led(13, 10); // onboard led, pin13, blink at 10hz
 
 
-
+EasyTimer debug(10);
 
 
 void setup() {
+
+  // set secondary values for if a fault happens
+  USER_throttleRequest.set_timeout_delay(1000);
+  USER_throttleRequest.set_secondary_value(0);
+
+  M400_throttlePosition.set_timeout_delay(1000);
+  M400_throttlePosition.set_secondary_value(100);
 
   // initialize the CAN bus
   cbus1.begin();
@@ -72,13 +67,8 @@ void setup() {
   // sweep the servo with <param>ms between increments/decrements
   servo_sweeper(25);
 
+  EasyTimer debug(10);
 
-  //turn the PID on
-  throttle_PID.SetMode(throttle_PID.Control::automatic);
-  USER_throttleKp = Kp;
-  USER_throttleKi = Ki;
-  USER_throttleKd = Kd;
-  throttle_PID.SetOutputLimits(etc_servo_lowerb_pwm, etc_servo_upperb_pwm);
 
 }
 
@@ -93,46 +83,65 @@ void loop() {
     decode_DYNO(rxmsg);
   }
 
-  if (USER_throttleRequest.is_updated()){
-    throttle_setpoint = USER_throttleRequest.value();
-  }
 
-  if (M400_throttlePosition.is_updated()){
-    throttle_input = M400_throttlePosition.value();
-  }
   
   // be sure that the request is within allowable bounds:
-  if (throttle_setpoint < throttle_pos_min){
-    throttle_setpoint = throttle_pos_min;
-  } else if (throttle_setpoint > throttle_pos_max){
-    throttle_setpoint = throttle_pos_max;
+  if (USER_throttleRequest.value() < throttle_pos_min){
+    ETC_throttlePosition = throttle_pos_min;
+  } else if (USER_throttleRequest.value() > throttle_pos_max){
+    ETC_throttlePosition = throttle_pos_max;
   }
 
 
   // check to see if the signals we want are still time-valid
-  // if (timeout_check_timer.isup()){
-  //   USER_throttleRequest.timeout_check();
-  //   M400_throttlePosition.timeout_check();
-  // }
+  if (timeout_check_timer.isup()){
+    USER_throttleRequest.timeout_check();
+    M400_throttlePosition.timeout_check();
+  }
 
-  // see if we need to update PID values
-  //if (USER_throttleKp.value() )
+  // update the servo----------------------------------------------------------
 
+  if (etc_servo_update_timer.isup()){
 
-  throttle_PID.Compute();
+    // calculate the delta 
+    int error = ETC_throttlePosition.value() - M400_throttlePosition.value();
 
+    // if the error is MORE than the allowable amount, we need to update the servo
+    if (abs(error) > etc_servo_degrees_dif_accepted){
 
-  // update the CAN values that we send
-  ETC_throttlePosition = throttle_setpoint;
-  ETC_servoOutput = servo_output;
+      // determine if the servo is reversed
+      int direction_multiplier = 0;
+      if (etc_servo_lowerb_pwm > etc_servo_upperb_pwm){
+        direction_multiplier = -1; // reversed
+      } else {
+        direction_multiplier = 1;  // normal
+      }
 
+      // if the error is greater, then we need to close the throttle by decrementing the position
+      if (error > 0 ){
 
+        etc_servo_current -= etc_servo_increment * direction_multiplier;
 
-  etc_servo.write(servo_output);
-  Serial.println();
-  Serial.print("M400 Throttle %:  "); Serial.println(M400_throttlePosition.value());
-  Serial.print("ETC Throttle %:   "); Serial.println(ETC_throttlePosition.value());
-  Serial.print("ETC Throttle PWM: "); Serial.println(ETC_servoOutput.value());
+      // the error is less, therefore we must increase the throttle to get to the desired open position
+      } else {
+
+        etc_servo_current += etc_servo_increment * direction_multiplier;
+
+      }
+
+    }
+
+    // update the servo
+    etc_servo.write(etc_servo_current);
+
+  }
+
+  if (debug.isup()){
+    Serial.println();
+    Serial.print("M400 Throttle %:  "); Serial.println(M400_throttlePosition.value());
+    Serial.print("ETC Throttle %:   "); Serial.println(ETC_throttlePosition.value());
+    Serial.print("ETC Throttle PWM: "); Serial.println(ETC_servoOutput.value());
+  }
 
   // send it!
   send_can1();
