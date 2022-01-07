@@ -93,10 +93,10 @@ void loop() {
 
 
   // check to see if the signals we want are still time-valid
-  // if (timeout_check_timer.isup()){
-  //   USER_throttleRequest.timeout_check();
-  //   M400_throttlePosition.timeout_check();
-  // }
+  if (timeout_check_timer.isup()){
+    USER_throttleRequest.timeout_check();
+    M400_throttlePosition.timeout_check();
+  }
 
   // update the servo----------------------------------------------------------
 
