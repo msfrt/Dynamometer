@@ -11,7 +11,6 @@ variables
   int USER_wpOverridePercent_int;
   msTimer USER_request_timer;
   message USER_request1 USER_request1_msg; // decleration of message into a variable
-  message USER_request2 USER_request2_msg;
 }
 
 on start // this gets called only on measurement start
@@ -32,14 +31,6 @@ on timer USER_request_timer
   USER_request1_msg.USER_wpOverridePercent = @Vector::USER_wpOverridePercent;
   output(USER_request1_msg);
   //write("PUMP: %i", @Vector::USER_wpOverrideStatus);
-}
-
-on sysvar_update Vector::USER_updatePID
-{
-  USER_request2_msg.USER_throttleKp = @Vector::USER_throttleKp / USER_request2_msg.USER_throttleKp.factor;
-  USER_request2_msg.USER_throttleKi = @Vector::USER_throttleKi / USER_request2_msg.USER_throttleKp.factor;
-  USER_request2_msg.USER_throttleKd = @Vector::USER_throttleKd / USER_request2_msg.USER_throttleKp.factor;
-  output(USER_request2_msg);
 }
 
 
