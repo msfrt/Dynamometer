@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<Panel Type="Vector.CANalyzer.Panels.PanelSerializer, Vector.CANalyzer.Panels.Serializer, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null">
+  <Object Type="Vector.CANalyzer.Panels.Runtime.Panel, Vector.CANalyzer.Panels.Common, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="Panel" Children="Controls" ControlName="Torque_cluster">
+    <Object Type="Vector.CANalyzer.Panels.Design.CheckBoxControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="CheckBoxControl1" Children="Controls" ControlName="Check Box">
+      <Property Name="Name">CheckBoxControl1</Property>
+      <Property Name="Size">121, 15</Property>
+      <Property Name="Location">139, 313</Property>
+      <Property Name="Text">Enable Configuration</Property>
+      <Property Name="SymbolConfiguration">4;16;Vector;;;USER_configFlag;1;;;-1</Property>
+      <Property Name="TabIndex">6</Property>
+    </Object>
+    <Object Type="Vector.CANalyzer.Panels.Design.GroupBoxControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="GroupBoxControl2" Children="Controls" ControlName="Configuration Group Box">
+      <Object Type="Vector.CANalyzer.Panels.Design.ButtonControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="ButtonControl5" Children="Controls" ControlName="Save Configuration">
+        <Property Name="Name">ButtonControl5</Property>
+        <Property Name="Size">110, 23</Property>
+        <Property Name="Location">2, 16</Property>
+        <Property Name="Text">Save Configuration</Property>
+        <Property Name="SymbolConfiguration">4;16;Vector;;;USER_daqSaveFlag;1;;;-1</Property>
+        <Property Name="TabIndex">16</Property>
+      </Object>
+      <Object Type="Vector.CANalyzer.Panels.Design.TextBoxControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="TextBoxControl1" Children="Controls" ControlName="Torque 1">
+        <Property Name="Name">TextBoxControl1</Property>
+        <Property Name="Size">112, 38</Property>
+        <Property Name="Location">0, 46</Property>
+        <Property Name="AlarmUpperTextColor">WindowText</Property>
+        <Property Name="ValueDecimalPlaces">1</Property>
+        <Property Name="AlarmLowerBkgColor">Salmon</Property>
+        <Property Name="ValueDisplay">Double</Property>
+        <Property Name="AlarmUpperBkgColor">IndianRed</Property>
+        <Property Name="AlarmLowerTextColor">WindowText</Property>
+        <Property Name="SendOnFocusLost">False</Property>
+        <Property Name="AlarmUpperFont">Microsoft Sans Serif, 8.1pt</Property>
+        <Property Name="AlarmGeneralSettings">1;0;-3276.8;3276.7</Property>
+        <Property Name="DisplayLabel">Left</Property>
+        <Property Name="DescriptionText">Torque</Property>
+        <Property Name="AlarmLowerFont">Microsoft Sans Serif, 8.1pt</Property>
+        <Property Name="DescriptionSize">37, 16</Property>
+        <Property Name="SymbolConfiguration">4;16;Vector;;;USER_configTorqueDataPoint;2;;;0</Property>
+        <Property Name="TabIndex">5</Property>
+      </Object>
+      <Object Type="Vector.CANalyzer.Panels.Design.ButtonControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="ButtonControl4" Children="Controls" ControlName="Torque 3 Send">
+        <Property Name="Name">ButtonControl4</Property>
+        <Property Name="Size">75, 23</Property>
+        <Property Name="Location">303, 73</Property>
+        <Property Name="PressValue">3</Property>
+        <Property Name="Text">Set Value</Property>
+        <Property Name="SymbolConfiguration">4;16;Vector;;;USER_configDataPointNumber;1;;;-1</Property>
+        <Property Name="TabIndex">15</Property>
+      </Object>
+      <Object Type="Vector.CANalyzer.Panels.Design.ButtonControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="ButtonControl1" Children="Controls" ControlName="Button">
+        <Property Name="Name">ButtonControl1</Property>
+        <Property Name="Size">75, 23</Property>
+        <Property Name="Location">120, 16</Property>
+        <Property Name="ReleaseValue">2</Property>
+        <Property Name="Text">Zero</Property>
+        <Property Name="SymbolConfiguration">4;16;Vector;;;USER_daqBoardState;1;;;-1</Property>
+        <Property Name="TabIndex">9</Property>
+      </Object>
+      <Object Type="Vector.CANalyzer.Panels.Design.ButtonControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="ButtonControl3" Children="Controls" ControlName="Torque 2 Send">
+        <Property Name="Name">ButtonControl3</Property>
+        <Property Name="Size">75, 23</Property>
+        <Property Name="Location">170, 73</Property>
+        <Property Name="PressValue">2</Property>
+        <Property Name="Text">Set Value</Property>
+        <Property Name="SymbolConfiguration">4;16;Vector;;;USER_configDataPointNumber;1;;;-1</Property>
+        <Property Name="TabIndex">14</Property>
+      </Object>
+      <Object Type="Vector.CANalyzer.Panels.Design.ButtonControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="ButtonControl2" Children="Controls" ControlName="Torque 1 Send">
+        <Property Name="Name">ButtonControl2</Property>
+        <Property Name="Size">75, 23</Property>
+        <Property Name="Location">36, 73</Property>
+        <Property Name="Text">Set Value</Property>
+        <Property Name="SymbolConfiguration">4;16;Vector;;;USER_configDataPointNumber;1;;;-1</Property>
+        <Property Name="TabIndex">13</Property>
+      </Object>
+      <Object Type="Vector.CANalyzer.Panels.Design.TextBoxControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="TextBoxControl2" Children="Controls" ControlName="Torque 2">
+        <Property Name="Name">TextBoxControl2</Property>
+        <Property Name="Size">112, 38</Property>
+        <Property Name="Location">133, 46</Property>
+        <Property Name="AlarmUpperTextColor">WindowText</Property>
+        <Property Name="ValueDecimalPlaces">1</Property>
+        <Property Name="AlarmLowerBkgColor">Salmon</Property>
+        <Property Name="ValueDisplay">Double</Property>
+        <Property Name="AlarmUpperBkgColor">IndianRed</Property>
+        <Property Name="AlarmLowerTextColor">WindowText</Property>
+        <Property Name="SendOnFocusLost">False</Property>
+        <Property Name="AlarmUpperFont">Microsoft Sans Serif, 8.1pt</Property>
+        <Property Name="AlarmGeneralSettings">1;0;-3276.8;3276.7</Property>
+        <Property Name="DisplayLabel">Left</Property>
+        <Property Name="DescriptionText">Torque</Property>
+        <Property Name="AlarmLowerFont">Microsoft Sans Serif, 8.1pt</Property>
+        <Property Name="DescriptionSize">37, 16</Property>
+        <Property Name="SymbolConfiguration">4;16;Vector;;;USER_configTorqueDataPoint;2;;;1</Property>
+        <Property Name="TabIndex">11</Property>
+      </Object>
+      <Object Type="Vector.CANalyzer.Panels.Design.TextBoxControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="TextBoxControl3" Children="Controls" ControlName="Torque 3">
+        <Property Name="Name">TextBoxControl3</Property>
+        <Property Name="Size">112, 38</Property>
+        <Property Name="Location">266, 46</Property>
+        <Property Name="AlarmUpperTextColor">WindowText</Property>
+        <Property Name="ValueDecimalPlaces">1</Property>
+        <Property Name="AlarmLowerBkgColor">Salmon</Property>
+        <Property Name="ValueDisplay">Double</Property>
+        <Property Name="AlarmUpperBkgColor">IndianRed</Property>
+        <Property Name="AlarmLowerTextColor">WindowText</Property>
+        <Property Name="SendOnFocusLost">False</Property>
+        <Property Name="AlarmUpperFont">Microsoft Sans Serif, 8.1pt</Property>
+        <Property Name="AlarmGeneralSettings">1;0;-3276.8;3276.7</Property>
+        <Property Name="DisplayLabel">Left</Property>
+        <Property Name="DescriptionText">Torque</Property>
+        <Property Name="AlarmLowerFont">Microsoft Sans Serif, 8.1pt</Property>
+        <Property Name="DescriptionSize">37, 16</Property>
+        <Property Name="SymbolConfiguration">4;16;Vector;;;USER_configTorqueDataPoint;2;;;2</Property>
+        <Property Name="TabIndex">12</Property>
+      </Object>
+      <Property Name="Name">GroupBoxControl2</Property>
+      <Property Name="Size">387, 102</Property>
+      <Property Name="Location">6, 335</Property>
+      <Property Name="Text">Configuration</Property>
+      <Property Name="TabIndex">17</Property>
+    </Object>
+    <Object Type="Vector.CANalyzer.Panels.Design.GroupBoxControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="GroupBoxControl1" Children="Controls" ControlName="Group Box">
+      <Object Type="Vector.CANalyzer.Panels.Design.LCDControl, Vector.CANalyzer.Panels.CommonControls, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="LCDControl1" ControlName="LCD Control">
+        <Property Name="Name">LCDControl1</Property>
+        <Property Name="Size">164, 50</Property>
+        <Property Name="Location">78, 247</Property>
+        <Property Name="NumberIntDigits">3</Property>
+        <Property Name="DecimalPlaces">2</Property>
+        <Property Name="SymbolConfiguration">4;2;DYNO;DAQ;DAQ_00;DAQ_torqueValue;1;CAN1;;-1</Property>
+      </Object>
+      <Object Type="Vector.CANalyzer.Panels.Design.AnalogGaugeControl, Vector.CANalyzer.Panels.AnalogGauge, Version=8.2.80.0, Culture=neutral, PublicKeyToken=null" Name="AnalogGaugeControl1" ControlName="Analog Gauge">
+        <Property Name="Name">AnalogGaugeControl1</Property>
+        <Property Name="Size">320, 247</Property>
+        <Property Name="Location">0, 17</Property>
+        <Property Name="IsMargin">False</Property>
+        <Property Name="CriticalProps" Member="AAEAAAD/////AQAAAAAAAAAEAQAAAC9TeXN0ZW0uUmVmbGVjdGlvbi5NZW1iZXJJbmZvU2VyaWFsaXphdGlvbkhvbGRlcgcAAAAETmFtZQxBc3NlbWJseU5hbWUJQ2xhc3NOYW1lCVNpZ25hdHVyZQpTaWduYXR1cmUyCk1lbWJlclR5cGUQR2VuZXJpY0FyZ3VtZW50cwEBAQEBAAMIDVN5c3RlbS5UeXBlW10GAgAAAAUuY3RvcgYDAAAAW1ZlY3Rvci5DQU5hbHl6ZXIuUGFuZWxzLkFuYWxvZ0dhdWdlLCBWZXJzaW9uPTguMi44MC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPW51bGwGBAAAADZWZWN0b3IuQ0FOYWx5emVyLlBhbmVscy5EZXNpZ24uR2F1Z2VDcml0aWNhbFByb3BlcnRpZXMGBQAAADJWb2lkIC5jdG9yKERvdWJsZSwgRG91YmxlLCBEb3VibGUsIERvdWJsZSwgRG91YmxlKQYGAAAAUC5jdG9yKFN5c3RlbS5Eb3VibGUsIFN5c3RlbS5Eb3VibGUsIFN5c3RlbS5Eb3VibGUsIFN5c3RlbS5Eb3VibGUsIFN5c3RlbS5Eb3VibGUpAQAAAAoL">
+          <Argument>0</Argument>
+          <Argument>80</Argument>
+          <Argument>0</Argument>
+          <Argument>55</Argument>
+          <Argument>70</Argument>
+        </Property>
+        <Property Name="GaugeFont">Microsoft Sans Serif, 8pt</Property>
+        <Property Name="LegendText">Torque</Property>
+        <Property Name="IsFrame">False</Property>
+        <Property Name="ScaleAngle">180</Property>
+        <Property Name="SymbolConfiguration">
+        </Property>
+      </Object>
+      <Property Name="Name">GroupBoxControl1</Property>
+      <Property Name="Size">319, 300</Property>
+      <Property Name="Location">40, 7</Property>
+      <Property Name="Text">Torque Readings</Property>
+      <Property Name="TabIndex">4</Property>
+    </Object>
+    <Property Name="Name">Panel</Property>
+    <Property Name="Size">398, 444</Property>
+  </Object>
+</Panel>

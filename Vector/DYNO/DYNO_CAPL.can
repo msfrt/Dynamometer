@@ -9,15 +9,23 @@ variables
   int USER_request_freq = 10; // in Hz (edit this one)
   int USER_request_freq_ms;
   int USER_wpOverridePercent_int;
+  
+  int USER_daqConfig_freq = 10; // in Hz (edit this one)
+  int USER_daqConfig_freq_ms;
+  
   msTimer USER_request_timer;
   message USER_request1 USER_request1_msg; // decleration of message into a variable
   message USER_request2 USER_request2_msg;
+  
+  message USER_request3 USER_request3_msg;
 }
 
 on start // this gets called only on measurement start
 {
   USER_request_freq_ms = 1000 / USER_request_freq; // calculate the ms for desired freq
   setTimer(USER_request_timer, USER_request_freq_ms); // set the initial timer
+  
+  USER_daqConfig_freq_ms = 1000 / USER_daqConfig_freq; // calculate the ms for desired freq
 }
 
 
@@ -40,6 +48,39 @@ on sysvar_update Vector::USER_updatePID
   USER_request2_msg.USER_throttleKi = @Vector::USER_throttleKi / USER_request2_msg.USER_throttleKp.factor;
   USER_request2_msg.USER_throttleKd = @Vector::USER_throttleKd / USER_request2_msg.USER_throttleKp.factor;
   output(USER_request2_msg);
+}
+
+on sysvar_update Vector::USER_daqBoardState
+{
+  USER_request3_msg.USER_daqBoardState = @Vector::USER_daqBoardState;
+  USER_request3_msg.USER_daqSaveFlag = @Vector::USER_daqSaveFlag;
+  USER_request3_msg.USER_configDataPointNumber = @Vector::USER_configDataPointNumber;
+  
+  
+}
+
+on sysvar_update Vector::USER_configFlag
+{
+  if (@Vector::USER_configFlag == 0)
+  {
+    setControlVisibility("Torque_cluster","Configuration Group Box",0);
+    @Vector::USER_daqBoardState = 0;
+  }
+  else
+  {
+    setControlVisibility("Torque_cluster","Configuration Group Box",1);
+    @Vector::USER_daqBoardState = 2;
+  }
+}
+
+on sysvar_update Vector::USER_configDataPointNumber
+{
+  
+  if(@Vector::USER_configDataPointNumber != 0)
+  {
+    USER_request3_msg.USER_configTorqueDataPoint = @Vector::USER_configTorqueDataPoint[@Vector::USER_configDataPointNumber-1];
+  }
+    
 }
 
 

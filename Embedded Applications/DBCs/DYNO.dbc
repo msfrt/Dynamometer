@@ -42,14 +42,14 @@ BO_ 3221225472 VECTOR__INDEPENDENT_SIG_MSG: 0 Vector__XXX
  SG_ PDM_counter06 : 0|4@1+ (1,0) [0|0] "" Vector__XXX
  SG_ PDM_counter01 : 0|4@1+ (1,0) [0|15] "" Vector__XXX
 
-BO_ 73 DAQ_01: 8 DAQ
- SG_ DAQ_saveFlag : 5|1@1- (1,0) [0|0] "" Vector__XXX
- SG_ DAQ_configTorqueDataPoint : 8|16@1- (1,0) [0|0] "" Vector__XXX
- SG_ DAQ_configDataPointNumber : 2|3@1+ (1,0) [0|0] "" Vector__XXX
- SG_ DAQ_BoardState : 0|2@1+ (1,0) [0|0] "" Vector__XXX
+BO_ 129 USER_request3: 8 Vector__XXX
+ SG_ USER_daqSaveFlag : 5|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ USER_configTorqueDataPoint : 8|16@1- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
+ SG_ USER_configDataPointNumber : 2|3@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ USER_daqBoardState : 0|2@1+ (1,0) [0|0] "" Vector__XXX
 
 BO_ 72 DAQ_00: 8 DAQ
- SG_ DAQ_torqueValue : 0|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ DAQ_torqueValue : 0|16@1- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
 
 BO_ 128 USER_request2: 8 Vector__XXX
  SG_ USER_throttleKp : 0|16@1- (0.01,0) [-327.68|327.67] "" Vector__XXX
@@ -223,11 +223,11 @@ BO_ 150 PDM_00: 8 PDM
 
 CM_ BU_ PDM "Power Distrubution Module";
 CM_ BO_ 3221225472 "This is a message for not used signals, created by Vector CANdb++ DBC OLE DB Provider.";
-CM_ SG_ 73 DAQ_saveFlag "Signal for Saving Config to EEPROM
+CM_ SG_ 129 USER_daqSaveFlag "Signal for Saving Config to EEPROM
 ";
-CM_ SG_ 73 DAQ_configTorqueDataPoint "Torque from Computer for Doing Configuration";
-CM_ SG_ 73 DAQ_configDataPointNumber "Selecting Which Data Point is Being Configured";
-CM_ SG_ 73 DAQ_BoardState "Board State for Configuration";
+CM_ SG_ 129 USER_configTorqueDataPoint "Torque from Computer for Doing Configuration";
+CM_ SG_ 129 USER_configDataPointNumber "Selecting Which Data Point is Being Configured";
+CM_ SG_ 129 USER_daqBoardState "Board State for Configuration";
 CM_ SG_ 72 DAQ_torqueValue "Torque Value from Board
 ";
 CM_ SG_ 128 USER_throttleKp "etc PID";
