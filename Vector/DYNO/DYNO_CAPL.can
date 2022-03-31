@@ -42,13 +42,6 @@ on timer USER_request_timer
   //write("PUMP: %i", @Vector::USER_wpOverrideStatus);
 }
 
-on sysvar_update Vector::USER_updatePID
-{
-  USER_request2_msg.USER_throttleKp = @Vector::USER_throttleKp / USER_request2_msg.USER_throttleKp.factor;
-  USER_request2_msg.USER_throttleKi = @Vector::USER_throttleKi / USER_request2_msg.USER_throttleKp.factor;
-  USER_request2_msg.USER_throttleKd = @Vector::USER_throttleKd / USER_request2_msg.USER_throttleKp.factor;
-  output(USER_request2_msg);
-}
 
 on sysvar_update Vector::USER_daqBoardState
 {

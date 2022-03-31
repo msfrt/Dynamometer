@@ -43,8 +43,8 @@ EasyTimer timeout_check_timer(10); // 10Hz
 // initializations for our servo
 Servo etc_servo;
 int etc_servo_pin = A6;
-int etc_servo_lowerb_deg = 154; // 0% throttle servo pos (verify on throttle if servo other than Hitec HS-5645MG)
-int etc_servo_upperb_deg = 55; // 100% throttle servo pos (right now, servo range is 25-165)
+int etc_servo_lowerb_deg = 127; // 0% throttle servo pos (verify on throttle if servo other than Hitec HS-5645MG)
+int etc_servo_upperb_deg = 28; // 100% throttle servo pos (right now, servo range is 25-165)
 int etc_servo_increment = 1; // number of servo degrees to
 int etc_servo_current = 0; // current position
 float etc_servo_degrees_dif_accepted = 0.5; // will stop moving the servo when within 'X' degrees of desired position
@@ -54,7 +54,7 @@ EasyTimer etc_servo_update_timer(15); // rate at which to update the servo
 // the good stuff
 LEDBlink onboard_led(13, 10); // onboard led, pin13, blink at 10hz
 
-
+EasyTimer debug(10);
 
 
 
@@ -115,9 +115,14 @@ void loop() {
   ETC_servoOutputAngle = etc_servo_current;
 
   etc_servo.write(etc_servo_current);
-  Serial.println();
-  Serial.println(ETC_throttlePosition.value());
-  Serial.println(ETC_servoOutputAngle.value());
+
+  if (debug.isup()){
+    Serial.println();
+    Serial.println(ETC_throttlePosition.value());
+    Serial.println(ETC_servoOutputAngle.value());
+    //Serial.println(etc_servo_current);
+    Serial.println(M400_throttlePosition.value());
+  }
 
   // send it!
   send_can1();

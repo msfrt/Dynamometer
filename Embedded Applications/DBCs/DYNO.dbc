@@ -57,9 +57,9 @@ BO_ 128 USER_request2: 8 Vector__XXX
  SG_ USER_throttleKd : 32|16@1- (0.01,0) [-327.68|327.67] "" Vector__XXX
 
 BO_ 121 ETC_output: 8 Vector__XXX
- SG_ ETC_servoOutputAngle : 24|16@1- (1,0) [-32768|32767] "" Vector__XXX
- SG_ ETC_status : 0|8@1- (0.1,0) [0|100] "" Vector__XXX
- SG_ ETC_throttlePosition : 8|16@1- (0.1,0) [-3276.8|3276.7] "" Vector__XXX
+ SG_ ETC_servoOutput : 24|16@1- (1,0) [0|255] "PWM" Vector__XXX
+ SG_ ETC_status : 0|8@1- (1,0) [-128|127] "" Vector__XXX
+ SG_ ETC_throttlePosition : 8|16@1- (0.1,0) [0|100] "%" Vector__XXX
 
 BO_ 120 USER_request1: 8 Vector__XXX
  SG_ USER_wpOverrideStatus : 32|8@1- (1,0) [-128|127] "V" Vector__XXX
@@ -191,7 +191,7 @@ BO_ 159 PDM_09: 8 PDM
  SG_ PDM_counter09 : 0|4@1+ (1,0) [0|0] "" Vector__XXX
 
 BO_ 158 PDM_08: 8 PDM
- SG_ USER_wpOverrideStatus : 40|8@1- (1,0) [-128|127] "V" Vector__XXX
+ SG_ PDM_wpOverrideStatus : 40|8@1- (1,0) [-128|127] "V" Vector__XXX
  SG_ PDM_wpVoltMax : 8|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ PDM_wpVoltAvg : 24|16@1- (0.001,0) [-32.768|32.767] "V" Vector__XXX
  SG_ PDM_counter08 : 0|4@1+ (1,0) [0|0] "" Vector__XXX
@@ -233,7 +233,7 @@ CM_ SG_ 72 DAQ_torqueValue "Torque Value from Board
 CM_ SG_ 128 USER_throttleKp "etc PID";
 CM_ SG_ 128 USER_throttleKi "etc PID";
 CM_ SG_ 128 USER_throttleKd "etc PID";
-CM_ SG_ 121 ETC_servoOutputAngle "throttle output from the ETC module";
+CM_ SG_ 121 ETC_servoOutput "throttle output from the ETC module";
 CM_ SG_ 121 ETC_status "-1= unknown error;
 0 = idle;
 1 = throttle position request;
@@ -258,7 +258,7 @@ CM_ SG_ 160 PDM_fuelVoltAvg "voltage of the fuel circuit";
 CM_ SG_ 159 PDM_pdmVoltMin "voltage of the PDM";
 CM_ SG_ 159 PDM_pdmVoltMax "voltage of the PDM";
 CM_ SG_ 159 PDM_pdmVoltAvg "voltage of the PDM";
-CM_ SG_ 158 USER_wpOverrideStatus "the voltage of the water pump";
+CM_ SG_ 158 PDM_wpOverrideStatus "the voltage of the water pump";
 CM_ SG_ 158 PDM_wpVoltMax "the voltage of the water pump";
 CM_ SG_ 158 PDM_wpVoltAvg "the voltage of the water pump";
 CM_ SG_ 153 PDM_wpCurrentMin "the current going through the water pump";
