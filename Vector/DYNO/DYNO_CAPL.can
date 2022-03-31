@@ -49,6 +49,7 @@ on sysvar_update Vector::USER_daqBoardState
   USER_request3_msg.USER_daqSaveFlag = @Vector::USER_daqSaveFlag;
   USER_request3_msg.USER_configDataPointNumber = @Vector::USER_configDataPointNumber;
   
+  output(USER_request3_msg);  // senda message 3 over the CAN bus
   
 }
 
