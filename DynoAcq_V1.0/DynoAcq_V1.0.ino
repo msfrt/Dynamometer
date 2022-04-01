@@ -14,6 +14,8 @@
 #include <ReadADC.h>
 #include <EasyTimer.h>
 
+#include "dyno.hpp"
+
 #define ADC_CS 20
 
 //CAN Bus Creation
@@ -22,16 +24,9 @@ FlexCAN_T4<CAN2, RX_SIZE_256, TX_SIZE_16> cbus2;
 static CAN_message_t msg;
 static CAN_message_t rxmsg;
 
-//CAN Signals
-StateSignal DAQ_torqueValue(16, true, 10, 0, -3276.8, 3276.7, -1);
-StateSignal USER_configTorqueDataPoint(16, true, 10, 0, -3276.8, 3276.7, -1);
-StateSignal USER_daqSaveFlag(1, false, 1, 0, 0, 1, -1);
-StateSignal USER_daqBoardState(2, false, 1, 0, 0, 3, -1);
-StateSignal USER_configDataPointNumber(3, false, 1, 0, 0, 7, -1);
-
 ADCChip adc(ADC_CS);
 
-ADCSensor strainGauge(8, 0, 1);
+ADCSensor strainGauge(7, 2500, 1);
 
 EasyTimer sampleTimer(100);
 EasyTimer sendCAN(10);
@@ -55,6 +50,7 @@ void setup() {
   Serial.println(TORQUE_COEFF[0]);
   Serial.println(TORQUE_COEFF[1]);
 
+
 }
 
 void loop() {
@@ -62,6 +58,7 @@ void loop() {
   int saveFlag = USER_daqSaveFlag.value();
   if (sampleTimer.isup()) {
     adc.sample(strainGauge);
+    Serial.println(strainGauge.avg());
     torqueValue = calculateTorque(strainGauge.avg());
   }
 
@@ -89,7 +86,7 @@ void loop() {
 
       break;
   }
-  if (saveFlag == 1) {
+  if (saveFlag == 1 && USER_daqSaveFlag.is_updated()) {
     EEPROM.put(0, TORQUE_COEFF);
   }
   send_DAQ_00();
@@ -144,13 +141,6 @@ void send_DAQ_00() {
   msg.buf[7] = 0;
 
   cbus1.write(msg);
-}
-
-void read_USER_request3(CAN_message_t &imsg) {
-  USER_configTorqueDataPoint.set_can_value((imsg.buf[0] & 0b00000011));
-  USER_daqSaveFlag.set_can_value(((imsg.buf[0] >> 2) & 0b00000111));
-  USER_daqBoardState.set_can_value(((imsg.buf[0] >> 5) & 0b00000001));
-  USER_configDataPointNumber.set_can_value((imsg.buf[1] | (imsg.buf[2]<<8)));
 }
 
 void read_can1() {
