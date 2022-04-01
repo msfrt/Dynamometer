@@ -28,7 +28,7 @@ ADCChip adc(ADC_CS);
 
 ADCSensor strainGauge(7, 2500, 1);
 
-EasyTimer sampleTimer(100);
+EasyTimer sampleTimer(1000);
 EasyTimer sendCAN(10);
 
 float TORQUE_COEFF[2] = {1, 0};
@@ -58,8 +58,12 @@ void loop() {
   int saveFlag = USER_daqSaveFlag.value();
   if (sampleTimer.isup()) {
     adc.sample(strainGauge);
-    Serial.println(strainGauge.avg());
+    
     torqueValue = calculateTorque(strainGauge.avg());
+  }
+
+  if(sendCAN.isup()){
+    Serial.println(strainGauge.avg());
   }
 
   switch ((int)USER_daqBoardState.value()) {
