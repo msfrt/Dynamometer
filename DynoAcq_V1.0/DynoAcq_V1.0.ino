@@ -31,7 +31,7 @@ ADCSensor strainGauge(7, 2500, 1);
 EasyTimer sampleTimer(1000);
 EasyTimer sendCAN(10);
 
-float TORQUE_COEFF[2] = {1, 0};
+float TORQUE_COEFF[2] = {1.0, 0.0};
 float torqueDataPoint[3] = {0, 0, 0};
 int strainDataPoint[3] = {0, 0, 0};
 
@@ -59,14 +59,14 @@ void loop() {
   if (sampleTimer.isup()) {
     adc.sample(strainGauge);
     
-    torqueValue = calculateTorque(strainGauge.avg());
+    torqueValue = strainGauge.avg();//calculateTorque(strainGauge.avg());
   }
 
   if(sendCAN.isup()){
-    Serial.println(strainGauge.avg());
+    Serial.println(TORQUE_COEFF[0]);
   }
 
-  switch ((int)USER_daqBoardState.value()) {
+  /*switch ((int)USER_daqBoardState.value()) {
     case 0: // Normal state for reading strain gauge
     
       break;
@@ -92,11 +92,11 @@ void loop() {
   }
   if (saveFlag == 1 && USER_daqSaveFlag.is_updated()) {
     EEPROM.put(0, TORQUE_COEFF);
-  }
+  }*/
   send_DAQ_00();
 }
 
-float calculateTorque(int strain) {
+float calculateTorque(float strain) {
   float torqueNm = 0;
   torqueNm = (strain * TORQUE_COEFF[0]) + TORQUE_COEFF[1];
   return torqueNm;
