@@ -31,7 +31,7 @@ ADCSensor strainGauge(7, 2500, 1);
 EasyTimer sampleTimer(1000);
 EasyTimer sendCAN(10);
 
-float TORQUE_COEFF[2] = {1.0, 0.0};
+static float TORQUE_COEFF[2] = {1.0f,0.0f};
 float torqueDataPoint[3] = {0, 0, 0};
 int strainDataPoint[3] = {0, 0, 0};
 
@@ -46,6 +46,7 @@ void setup() {
   cbus1.begin();
   cbus1.setBaudRate(1000000);
   //set_mailboxes();
+  //EEPROM.put(0,TORQUE_COEFF);
   EEPROM.get(0, TORQUE_COEFF);
   Serial.println(TORQUE_COEFF[0]);
   Serial.println(TORQUE_COEFF[1]);
@@ -59,11 +60,24 @@ void loop() {
   if (sampleTimer.isup()) {
     adc.sample(strainGauge);
     
-    torqueValue = strainGauge.avg();//calculateTorque(strainGauge.avg());
+    torqueValue = calculateTorque(strainGauge.avg());
   }
 
   if(sendCAN.isup()){
-    Serial.println(TORQUE_COEFF[0]);
+    Serial.print("Torque_Value:");
+    Serial.print(torqueValue);
+    Serial.print("\t");
+    Serial.print("Board_State:");
+    Serial.print(USER_daqBoardState.value());
+    Serial.print("\t");
+    Serial.print("Save_Flag:");
+    Serial.print(USER_daqSaveFlag.value());
+    Serial.print("\t");
+    Serial.print("Data_Point_Number:");
+    Serial.print(USER_configDataPointNumber.value());
+    Serial.print("\t");
+    Serial.print("Torque_Data_Point:");
+    Serial.println(USER_configTorqueDataPoint.value());
   }
 
   /*switch ((int)USER_daqBoardState.value()) {
