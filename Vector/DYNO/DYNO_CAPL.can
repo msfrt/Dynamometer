@@ -14,6 +14,7 @@ variables
   int USER_daqConfig_freq_ms;
   
   msTimer USER_request_timer;
+  msTimer USER_daqConfig_timer;
   message USER_request1 USER_request1_msg; // decleration of message into a variable
   message USER_request2 USER_request2_msg;
   
@@ -26,6 +27,8 @@ on start // this gets called only on measurement start
   setTimer(USER_request_timer, USER_request_freq_ms); // set the initial timer
   
   USER_daqConfig_freq_ms = 1000 / USER_daqConfig_freq; // calculate the ms for desired freq
+  setTimer(USER_daqConfig_timer, USER_daqConfig_freq_ms); // set the initial timer
+  setControlVisibility("Torque_cluster","Configuration Group Box",0);
 }
 
 
@@ -42,15 +45,23 @@ on timer USER_request_timer
   //write("PUMP: %i", @Vector::USER_wpOverrideStatus);
 }
 
+on timer USER_daqConfig_timer
+{
+  // reset the timer
+  setTimer(USER_daqConfig_timer, USER_daqConfig_freq_ms);
+  
+  USER_request3_msg.USER_daqBoardState = @Vector::USER_daqBoardState;
+  USER_request3_msg.USER_daqSaveFlag = @Vector::USER_daqSaveFlag;
+  USER_request3_msg.USER_configDataPointNumber = @Vector::USER_configDataPointNumber;
+  output(USER_request3_msg);  // senda message 3 over the CAN bus
+  
+}
+
 
 on sysvar_update Vector::USER_daqBoardState
 {
   USER_request3_msg.USER_daqBoardState = @Vector::USER_daqBoardState;
-  USER_request3_msg.USER_daqSaveFlag = @Vector::USER_daqSaveFlag;
-  USER_request3_msg.USER_configDataPointNumber = @Vector::USER_configDataPointNumber;
-  
   output(USER_request3_msg);  // senda message 3 over the CAN bus
-  
 }
 
 on sysvar_update Vector::USER_configFlag
@@ -72,9 +83,17 @@ on sysvar_update Vector::USER_configDataPointNumber
   
   if(@Vector::USER_configDataPointNumber != 0)
   {
-    USER_request3_msg.USER_configTorqueDataPoint = @Vector::USER_configTorqueDataPoint[@Vector::USER_configDataPointNumber-1];
+    USER_request3_msg.USER_configTorqueDataPoint = @Vector::USER_configTorqueDataPoint[@Vector::USER_configDataPointNumber-1]/ USER_request3_msg.USER_configTorqueDataPoint.factor;
   }
+  USER_request3_msg.USER_configDataPointNumber = @Vector::USER_configDataPointNumber;
+  output(USER_request3_msg);  // senda message 3 over the CAN bus
     
+}
+
+on sysvar_update Vector::USER_daqSaveFlag
+{
+ USER_request3_msg.USER_daqSaveFlag = @Vector::USER_daqSaveFlag;
+  output(USER_request3_msg);  // senda message 3 over the CAN bus
 }
 
 
