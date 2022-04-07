@@ -15,10 +15,10 @@
 #include <StateCAN.h>
 
 // Message: USER_request3 [0x81]
-StateSignal USER_daqBoardState(2, false, 1, 0.0, 0, 0, 0.0, 0, 129);
-StateSignal USER_configDataPointNumber(3, false, 1, 0.0, 0, 0, 0.0, 0, 129);
-StateSignal USER_daqSaveFlag(1, false, 1, 0.0, 0, 0, 0.0, 0, 129);
-StateSignal USER_configTorqueDataPoint(16, true, 10, 0.0, -3276, 3276, 0.0, 0, 129);
+StateSignal USER_daqBoardState(2, false, 1, 0.0, 0, 0, -1.0, 0, 129);
+StateSignal USER_configDataPointNumber(3, false, 1, 0.0, 0, 0, -1.0, 0, 129);
+StateSignal USER_daqSaveFlag(1, false, 1, 0.0, 0, 0, -1.0, 0, 129);
+StateSignal USER_configTorqueDataPoint(16, true, 10, 0.0, -3276, 3276, -1.0, 0, 129);
 
 // Message: DAQ_00 [0x48]
 StateSignal DAQ_torqueValue(16, true, 10, 0.0, -3276, 3276, 0.0, 0, 72);

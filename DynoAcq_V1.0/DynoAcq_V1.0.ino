@@ -26,14 +26,16 @@ static CAN_message_t rxmsg;
 
 ADCChip adc(ADC_CS);
 
-ADCSensor strainGauge(7, 2500, 1);
+ADCSensor strainGauge(7, 2450, 1);
 
-EasyTimer sampleTimer(1000);
-EasyTimer sendCAN(10);
+EasyTimer sampleTimer(100000);
+EasyTimer calcTimer(1000);
+EasyTimer serialTimer(10);
+EasyTimer sendCAN(100);
 
 static float TORQUE_COEFF[2] = {1.0f,0.0f};
-float torqueDataPoint[3] = {0, 0, 0};
-int strainDataPoint[3] = {0, 0, 0};
+float torqueDataPoint[3] = {2400, 2500, 2600};
+float strainDataPoint[3] = {2400, 2500, 2600};
 
 int dataPointNumber = 0; // placeholder for CAN message
 
@@ -47,7 +49,7 @@ void setup() {
   cbus1.setBaudRate(1000000);
   //set_mailboxes();
   //EEPROM.put(0,TORQUE_COEFF);
-  EEPROM.get(0, TORQUE_COEFF);
+  //EEPROM.get(0, TORQUE_COEFF);
   Serial.println(TORQUE_COEFF[0]);
   Serial.println(TORQUE_COEFF[1]);
 
@@ -57,13 +59,16 @@ void setup() {
 void loop() {
   read_can1();
   int saveFlag = USER_daqSaveFlag.value();
+  int board_state = (int)USER_daqBoardState.value();
   if (sampleTimer.isup()) {
-    adc.sample(strainGauge);
-    
-    torqueValue = calculateTorque(strainGauge.avg());
+    adc.sample(strainGauge); 
   }
-
-  if(sendCAN.isup()){
+  if(calcTimer.isup()){
+    torqueValue = calculateTorque(strainGauge.avg());
+    send_DAQ_00();
+  }
+  
+  if(serialTimer.isup()){
     Serial.print("Torque_Value:");
     Serial.print(torqueValue);
     Serial.print("\t");
@@ -78,9 +83,15 @@ void loop() {
     Serial.print("\t");
     Serial.print("Torque_Data_Point:");
     Serial.println(USER_configTorqueDataPoint.value());
+    Serial.print("Torque_Coeff_0:");
+    Serial.print(TORQUE_COEFF[0]);
+    Serial.print("\t");
+    Serial.print("Torque_Coeff_1:");
+    Serial.println(TORQUE_COEFF[1]);
+    
   }
-
-  /*switch ((int)USER_daqBoardState.value()) {
+ // if(sendCAN.isup()){
+  switch ((int)USER_daqBoardState.value()) {
     case 0: // Normal state for reading strain gauge
     
       break;
@@ -95,19 +106,21 @@ void loop() {
         torqueDataPoint[dataPointNumber - 1] = USER_configTorqueDataPoint.value();
         strainDataPoint[dataPointNumber - 1] = strainGauge.avg();
       }
-      else {
-        simpLinReg((float*)strainDataPoint, torqueDataPoint, TORQUE_COEFF);
-      }
+      break;
+    case 3:
+        simpLinReg(strainDataPoint, torqueDataPoint, TORQUE_COEFF);
       break;
 
     default:
 
       break;
   }
+ // }
+  
   if (saveFlag == 1 && USER_daqSaveFlag.is_updated()) {
-    EEPROM.put(0, TORQUE_COEFF);
-  }*/
-  send_DAQ_00();
+    //EEPROM.put(0, TORQUE_COEFF);
+  }
+  
 }
 
 float calculateTorque(float strain) {
@@ -133,14 +146,17 @@ void simpLinReg(float* x, float* y, float* coeff) {
     xybar = xybar + x[i] * y[i];
     xsqbar = xsqbar + x[i] * x[i];
   }
+  
   xbar = xbar / n;
   ybar = ybar / n;
   xybar = xybar / n;
   xsqbar = xsqbar / n;
 
   // simple linear regression algorithm
+  if((xsqbar - xbar * xbar)!=0.0){
   coeff[0] = (xybar - xbar * ybar) / (xsqbar - xbar * xbar);
   coeff[1] = ybar - coeff[0] * xbar;
+  }
 }
 
 void send_DAQ_00() {
@@ -164,7 +180,7 @@ void send_DAQ_00() {
 void read_can1() {
   if (cbus1.read(rxmsg)) {
     switch (rxmsg.id) {
-      case 0x81:
+      case 129:
         read_USER_request3(rxmsg);
         break;
       default:
