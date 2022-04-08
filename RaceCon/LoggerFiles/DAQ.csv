@@ -1,0 +1,2 @@
+Group,Logged,Name,Source,Rate / True rate,Timeout,Default Value,Condition,Pretrigger,Telemetry,Datatype,Description
+DAQ,TRUE,DAQ_torqueValue,DDU7,20ms,,,,,None,,

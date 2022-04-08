@@ -1,0 +1,4 @@
+Group,Logged,Name,Source,Rate / True rate,Timeout,Default Value,Condition,Pretrigger,Telemetry,Datatype,Description
+ETC,TRUE,ETC_throttlePosition,DDU7,20 ms,,,,,None,,,
+ETC,TRUE,ETC_status,DDU7,20 ms,,,,,None,,,
+ETC,TRUE,ETC_servoOutputAngle,DDU7,20 ms,,,,,None,,,

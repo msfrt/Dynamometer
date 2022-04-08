@@ -1,0 +1,12 @@
+Group,Logged,Name,Source,Rate / True rate,Timeout,Default Value,Condition,Pretrigger,Telemetry,Datatype,Description
+USER,FALSE,USER_configDataPointNumber,DDU7,500 ms,,,,,None,,
+USER,FALSE,USER_configTorqueDataPoint,DDU7,500 ms,,,,,None,,
+USER,TRUE,USER_daqBoardState,DDU7,500 ms,,,,,None,,
+USER,FALSE,USER_daqSaveFlag,DDU7,500 ms,,,,,None,,
+USER,TRUE,USER_rpmRequest,DDU7,20 ms,,,,,None,,
+USER,FALSE,USER_throttleKd,DDU7,200 ms,,,,,None,,
+USER,FALSE,USER_throttleKi,DDU7,200 ms,,,,,None,,
+USER,FALSE,USER_throttleKp,DDU7,200 ms,,,,,None,,
+USER,TRUE,USER_throttleRequest,DDU7,20 ms,,,,,None,,
+USER,TRUE,USER_wpOverridePercent,DDU7,100 ms,,,,,None,,
+USER,TRUE,USER_wpOverrideStatus,DDU7,200 ms,,,,,None,,
