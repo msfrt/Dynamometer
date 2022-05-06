@@ -24,8 +24,10 @@ FlexCAN_T4<CAN2, RX_SIZE_256, TX_SIZE_16> cbus2;
 static CAN_message_t msg;
 static CAN_message_t rxmsg;
 
+// Create ADC object
 ADCChip adc(ADC_CS);
 
+// Add a sensor for the ADC
 ADCSensor strainGauge(7, 2450, 1);
 
 EasyTimer sampleTimer(100000);
@@ -33,12 +35,14 @@ EasyTimer calcTimer(1000);
 EasyTimer serialTimer(10);
 EasyTimer sendCAN(100);
 
+// Coeff for calculating torque on a lin-reg
 static float TORQUE_COEFF[2] = {1.0f,0.0f};
+// Place to store data points for calculating lin-reg
 float torqueDataPoint[3] = {2400, 2500, 2600};
 float strainDataPoint[3] = {2400, 2500, 2600};
 
-int dataPointNumber = 0; // placeholder for CAN message
-
+// Placeholders for CAN message values
+int dataPointNumber = 0; 
 float torqueValue = 0;
 
 void setup() {
@@ -48,6 +52,7 @@ void setup() {
   cbus1.begin();
   cbus1.setBaudRate(1000000);
   //set_mailboxes();
+  // Reading saved coeff in eeprom
   //EEPROM.put(0,TORQUE_COEFF);
   //EEPROM.get(0, TORQUE_COEFF);
   Serial.println(TORQUE_COEFF[0]);
@@ -57,9 +62,12 @@ void setup() {
 }
 
 void loop() {
+  // Read CAN 1
   read_can1();
+  
   int saveFlag = USER_daqSaveFlag.value();
   int board_state = (int)USER_daqBoardState.value();
+  
   if (sampleTimer.isup()) {
     adc.sample(strainGauge); 
   }
@@ -116,7 +124,7 @@ void loop() {
       break;
   }
  // }
-  
+  // When to save the torque coefficents
   if (saveFlag == 1 && USER_daqSaveFlag.is_updated()) {
     //EEPROM.put(0, TORQUE_COEFF);
   }
